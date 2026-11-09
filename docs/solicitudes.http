@@ -1,0 +1,76 @@
+# Abrir en un cliente que soporte archivos .http (por ejemplo REST Client de VS Code).
+# También se pueden copiar los métodos, URLs y cuerpos en Postman.
+# Iniciar la API antes. Ejecutar en orden, una sola vez desde un proceso nuevo.
+@baseUrl = http://localhost:3000
+
+### 1. Ver categorías (200)
+GET {{baseUrl}}/api/categorias
+
+### 2. Listado inicial vacío (200)
+GET {{baseUrl}}/api/productos
+
+### 3. Crear producto (201; ID 1 en un proceso nuevo)
+POST {{baseUrl}}/api/productos
+Content-Type: application/json
+
+{
+    "nombre": "Creatina monohidrato 300 g",
+    "marca": "Star Nutrition",
+    "idCategoria": 2,
+    "descripcion": "Producto de demostración",
+    "precio": 25000.50,
+    "stock": 10,
+    "stockMinimo": 3,
+    "sabor": "Sin sabor",
+    "imagen": ""
+}
+
+### 4. Obtener por ID (200)
+GET {{baseUrl}}/api/productos/1
+
+### 5. Rechazar duplicado (409)
+POST {{baseUrl}}/api/productos
+Content-Type: application/json
+
+{
+    "nombre": "Creatina monohidrato 300 g",
+    "marca": "Star Nutrition",
+    "idCategoria": 2,
+    "precio": 25000.50,
+    "stock": 10,
+    "sabor": "Sin sabor"
+}
+
+### 6. Modificar producto completo (200)
+PUT {{baseUrl}}/api/productos/1
+Content-Type: application/json
+
+{
+    "nombre": "Creatina monohidrato 300 g",
+    "marca": "Star Nutrition",
+    "idCategoria": 2,
+    "descripcion": "Producto actualizado de demostración",
+    "precio": 27000,
+    "stock": 8,
+    "stockMinimo": 3,
+    "sabor": "Sin sabor",
+    "imagen": ""
+}
+
+### 7. Rechazar precio negativo (400)
+POST {{baseUrl}}/api/productos
+Content-Type: application/json
+
+{ "nombre": "Barra", "idCategoria": 5, "precio": -1, "stock": 10 }
+
+### 8. Rechazar ID inválido (400)
+GET {{baseUrl}}/api/productos/abc
+
+### 9. Dar de baja (200; activo=false)
+DELETE {{baseUrl}}/api/productos/1
+
+### 10. Ya no está disponible (404)
+GET {{baseUrl}}/api/productos/1
+
+### 11. Listado vacío nuevamente (200)
+GET {{baseUrl}}/api/productos

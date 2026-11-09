@@ -1,0 +1,68 @@
+.form {
+    display: grid;
+    gap: 20px;
+    max-width: 760px;
+}
+
+.grupo {
+    display: grid;
+    gap: 20px;
+    min-width: 0;
+    margin: 0;
+    padding: 24px;
+    border: 0;
+    background: var(--color-paper);
+}
+
+.grupo :global(input),
+.grupo :global(select),
+.grupo :global(textarea) {
+    background: var(--color-ground);
+}
+
+.leyenda {
+    float: left;
+    width: 100%;
+    margin-bottom: 4px;
+    padding: 0;
+    font-family: var(--font-display);
+    font-size: var(--text-body);
+    font-weight: 800;
+}
+
+.dupla {
+    display: grid;
+    gap: 20px;
+}
+
+.imagenFila {
+    display: grid;
+    gap: 16px;
+    align-items: start;
+}
+
+.vista {
+    width: 120px;
+}
+
+.acciones {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 20px;
+    margin-top: 4px;
+}
+
+@media (min-width: 640px) {
+    .dupla {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .imagenFila {
+        grid-template-columns: minmax(0, 1fr) 120px;
+    }
+
+    .vista {
+        margin-top: 28px;
+    }
+}

@@ -1,0 +1,90 @@
+.contenedor {
+    display: grid;
+    gap: 12px;
+}
+
+.filtros {
+    display: grid;
+    gap: 16px;
+    padding: 20px;
+    background: var(--color-paper);
+}
+
+.filtros :global(input),
+.filtros :global(select) {
+    background: var(--color-ground);
+}
+
+.busqueda {
+    position: relative;
+}
+
+.busqueda :global(input) {
+    padding-left: 42px;
+}
+
+.lupa {
+    position: absolute;
+    left: 14px;
+    bottom: 15px;
+    pointer-events: none;
+}
+
+.check {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: var(--control-height);
+    font-weight: 600;
+}
+
+.check input {
+    width: 22px;
+    height: 22px;
+    margin: 0;
+    flex: none;
+    cursor: pointer;
+}
+
+.check label {
+    cursor: pointer;
+}
+
+.resumen {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px 16px;
+    min-height: 48px;
+}
+
+.resultados {
+    font-weight: 600;
+}
+
+@media (min-width: 720px) {
+    .filtros {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        align-items: end;
+    }
+
+    .busqueda {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (min-width: 1100px) {
+    .filtros {
+        grid-template-columns: minmax(0, 2fr) repeat(3, minmax(0, 1fr)) auto;
+    }
+
+    /* El panel tiene tres controles: búsqueda, categoría y el filtro de stock. */
+    .filtros[data-variante="panel"] {
+        grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) auto;
+    }
+
+    .busqueda {
+        grid-column: auto;
+    }
+}

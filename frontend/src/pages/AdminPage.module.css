@@ -1,0 +1,49 @@
+.resumen {
+    color: var(--color-ink-muted);
+}
+
+.contenido {
+    margin-top: 16px;
+}
+
+.error {
+    display: grid;
+    gap: 12px;
+}
+
+.pista {
+    max-width: 60ch;
+    font-size: var(--text-small);
+    color: var(--color-ink-muted);
+}
+
+.pista code {
+    padding: 1px 6px;
+    background: var(--color-sunk);
+    font-size: var(--text-small);
+}
+
+.esqueletoTabla {
+    display: grid;
+    gap: 2px;
+}
+
+.esqueletoFila {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 12px 16px;
+    background: var(--color-paper);
+}
+
+.esqueletoFila > :nth-child(2) {
+    flex: 1;
+}
+
+.esqueletoFormulario {
+    display: grid;
+    gap: 20px;
+    max-width: 760px;
+    padding: 24px;
+    background: var(--color-paper);
+}

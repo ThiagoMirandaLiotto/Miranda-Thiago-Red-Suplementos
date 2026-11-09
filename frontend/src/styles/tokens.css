@@ -1,0 +1,89 @@
+/* Tokens del sistema visual. La paleta y la tipografía salen de la Propuesta
+   y del logo; todo el CSS del proyecto usa estas variables. */
+:root {
+    /* Superficies claras: el gris del logo es el fondo de la marca */
+    --color-ground: #e8e8e8;
+    --color-paper: #f5f5f5;
+    --color-sunk: #dcdcdc;
+    --color-ink: #000000;
+    --color-ink-muted: #474747;
+    --color-placeholder: #6b6b6b;
+    --color-paper-hover: #efefef;
+    --color-sunk-hover: #cfcfcf;
+    --color-border-hover: #b8b8b8;
+    --color-scrollbar: #8a8a8a;
+    --color-disabled: #d4d4d4;
+    --color-ink-disabled: #4f4f4f;
+
+    /* Campos oscuros, para contraste */
+    --color-field: #0b0b0b;
+    --color-field-raised: #1a1a1a;
+    --color-field-hover: #262626;
+    --color-field-border: #2e2e2e;
+    --color-envase: #161616;
+    --color-white: #ffffff;
+    --color-ink-on-field: #e8e8e8;
+    --color-ink-on-field-muted: #a8a8a8;
+
+    /* Naranja Energía: solo llamados a la acción, siempre con texto negro (6,8:1) */
+    --color-accent: #d47e30;
+    --color-accent-hover: #c46f22;
+    --color-ink-on-accent: #000000;
+
+    /* Estados: siempre acompañados de texto e ícono */
+    --color-success: #1d6b3a;
+    --color-danger: #b3261e;
+    --color-danger-hover: #93201a;
+    --color-danger-tint: #f3dcda;
+    --color-warning: #8a4b00;
+    --color-success-on-field: #6fcf8f;
+    --color-danger-on-field: #ff8a7f;
+    --color-warning-on-field: #f0b46a;
+
+    --color-focus: var(--color-ink);
+
+    /* Tipografía: cinco tamaños en toda la app */
+    --font-display: "Montserrat Variable", "Montserrat", system-ui, sans-serif;
+    --font-text: "Open Sans Variable", "Open Sans", system-ui, sans-serif;
+    --text-display: 10.2vw;
+    --text-title: clamp(1.625rem, 1.2rem + 1.2vw, 2.25rem);
+    --text-lead: clamp(1.25rem, 1.05rem + 0.6vw, 1.5rem);
+    --text-body: 1.0625rem;
+    --text-small: 0.875rem;
+    --tracking-display: -0.03em;
+    --leading-display: 0.95;
+    --leading-body: 1.55;
+
+    /* Espacio y forma: esquinas rectas en todo el sitio */
+    --gutter: clamp(16px, 2.6vw, 32px);
+    --section-gap: clamp(96px, 11vw, 176px);
+    --measure: 46ch;
+    --radius: 0;
+    --control-height: 48px;
+    --control-height-lg: 56px;
+    --nav-height: 72px;
+
+    /* Movimiento: curvas fuertes de salida y duraciones cortas en la interfaz */
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+    --duration-press: 140ms;
+    --duration-fast: 160ms;
+    --duration-enter: 220ms;
+    --duration-exit: 150ms;
+    --duration-reveal: 600ms;
+    --stagger: 70ms;
+
+    /* El motivo del sitio público: la inclinación de "RED" en el logo, medida en sus trazos.
+       --lean-tan es la tangente de 7°: da el corrimiento horizontal de un corte a esa inclinación. */
+    --lean: -7deg;
+    --lean-tan: 0.1228;
+
+    /* Sombra solo para lo que flota de verdad: diálogo, menú y avisos */
+    --shadow-float: 0 18px 48px rgb(0 0 0 / 0.28), 0 2px 8px rgb(0 0 0 / 0.18);
+}
+
+@media (min-width: 1024px) {
+    :root {
+        --text-display: min(7.6vw, 9.5rem);
+    }
+}

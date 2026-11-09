@@ -1,0 +1,43 @@
+/* "clip" y no "hidden": no crea un contenedor de scroll, así que lo fijo y lo pegajoso siguen funcionando. */
+.sitio {
+    overflow-x: clip;
+    background: var(--color-field);
+}
+
+.main {
+    position: relative;
+    z-index: 1;
+    display: block;
+    background: var(--color-ground);
+}
+
+.main:focus {
+    outline: none;
+}
+
+.telon {
+    display: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .telon {
+        position: fixed;
+        inset: 0 -20vw;
+        z-index: 90;
+        display: block;
+        background: var(--color-field);
+        pointer-events: none;
+        animation: correr-telon 560ms var(--ease-in-out) 60ms both;
+    }
+}
+
+@keyframes correr-telon {
+    from {
+        transform: skewX(var(--lean));
+    }
+
+    to {
+        visibility: hidden;
+        transform: translateX(110%) skewX(var(--lean));
+    }
+}

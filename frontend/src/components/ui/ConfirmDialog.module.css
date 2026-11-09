@@ -1,0 +1,109 @@
+/* Estado cerrado: también es el estado del que sale la animación de cierre (más rápida). */
+.dialog {
+    width: min(480px, calc(100vw - 32px));
+    max-width: none;
+    margin: auto;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius);
+    background: var(--color-paper);
+    color: var(--color-ink);
+    box-shadow: var(--shadow-float); /* taste-skill-ignore: el diálogo flota sobre la página */
+    opacity: 0;
+    transform: translateY(8px) scale(0.97);
+    transition:
+        opacity var(--duration-exit) var(--ease-out),
+        transform var(--duration-exit) var(--ease-out),
+        overlay var(--duration-exit) allow-discrete,
+        display var(--duration-exit) allow-discrete;
+}
+
+/* Los modales no tienen disparador al que anclarse: entran centrados. */
+.dialog[open] {
+    opacity: 1;
+    transform: none;
+    transition-duration: var(--duration-enter);
+}
+
+@starting-style {
+    .dialog[open] {
+        opacity: 0;
+        transform: translateY(8px) scale(0.97);
+    }
+}
+
+.dialog::backdrop {
+    background: rgb(0 0 0 / 0);
+    transition:
+        background-color var(--duration-exit) ease,
+        overlay var(--duration-exit) allow-discrete,
+        display var(--duration-exit) allow-discrete;
+}
+
+.dialog[open]::backdrop {
+    background: rgb(0 0 0 / 0.6);
+    transition-duration: var(--duration-enter);
+}
+
+@starting-style {
+    .dialog[open]::backdrop {
+        background: rgb(0 0 0 / 0);
+    }
+}
+
+.contenido {
+    display: grid;
+    gap: 14px;
+    padding: 28px;
+}
+
+.titulo {
+    font-size: var(--text-lead);
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.descripcion {
+    color: var(--color-ink-muted);
+}
+
+.descripcion strong {
+    color: var(--color-ink);
+}
+
+.error {
+    font-size: var(--text-small);
+    font-weight: 600;
+    color: var(--color-danger);
+}
+
+.acciones {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+@media (max-width: 479px) {
+    .acciones {
+        flex-direction: column-reverse;
+    }
+
+    .acciones > * {
+        width: 100%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .dialog,
+    .dialog[open] {
+        transform: none;
+    }
+
+    @starting-style {
+        .dialog[open] {
+            transform: none;
+        }
+    }
+}

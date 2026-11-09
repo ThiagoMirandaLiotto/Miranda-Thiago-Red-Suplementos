@@ -1,0 +1,272 @@
+/* Teléfono: la foto arriba, con su borde inferior cortado a la inclinación del logo,
+   y el título montado sobre ese borde. */
+.hero {
+    --corte: calc(100vw * var(--lean-tan));
+    position: relative;
+    overflow: hidden;
+    background: var(--color-field);
+}
+
+.corte {
+    position: relative;
+    height: 58svh;
+    min-height: 340px;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - var(--corte)));
+}
+
+.fotos {
+    position: absolute;
+    inset: 0;
+}
+
+/* La foto nueva entra barriendo sobre la anterior, que queda quieta debajo. */
+.foto {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    clip-path: polygon(100% 0, 130% 0, 115% 100%, 85% 100%);
+}
+
+.foto[data-estado="activa"] {
+    z-index: 2;
+    clip-path: polygon(-30% 0, 130% 0, 115% 100%, -45% 100%);
+}
+
+.foto[data-estado="previa"] {
+    z-index: 1;
+    clip-path: polygon(-30% 0, 130% 0, 115% 100%, -45% 100%);
+}
+
+.velo {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    background: linear-gradient(to top, rgb(0 0 0 / 0.86), rgb(0 0 0 / 0.6) 24%, rgb(0 0 0 / 0) 62%); /* taste-skill-ignore: velo neutro bajo texto sobre foto */
+}
+
+.texto {
+    position: relative;
+    z-index: 4;
+    display: grid;
+    gap: 24px;
+    margin-top: calc(var(--text-display) * -1.5);
+    padding: 0 var(--gutter) max(64px, calc(var(--text-display) * 1.1));
+}
+
+.titulo {
+    max-width: 100%;
+}
+
+.columna {
+    display: grid;
+    gap: 16px;
+}
+
+.lead {
+    max-width: 30ch;
+    font-size: var(--text-lead);
+    font-weight: 600;
+    line-height: 1.3;
+    text-wrap: balance;
+}
+
+.estado {
+    max-width: 40ch;
+}
+
+.acciones {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px 28px;
+    margin-top: 8px;
+}
+
+.magnetico {
+    display: inline-block;
+}
+
+.enlace {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.enlace svg {
+    transition: transform var(--duration-enter) var(--ease-out);
+}
+
+.pausa {
+    position: absolute;
+    top: calc(max(58svh, 340px) - 56px - var(--corte) * 0.2);
+    right: var(--gutter);
+    z-index: 5;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .enlace:hover svg {
+        transform: translateX(6px);
+    }
+}
+
+/* Desktop: la foto entra desde la derecha a toda altura y el título cruza sobre su borde inclinado. */
+@media (min-width: 1024px) {
+    .hero {
+        --corte: calc(100svh * var(--lean-tan));
+        display: grid;
+        align-items: end;
+        min-height: max(100svh, 640px);
+    }
+
+    .corte {
+        position: absolute;
+        inset: 0 0 0 38%;
+        height: auto;
+        min-height: 0;
+        clip-path: polygon(var(--corte) 0, 100% 0, 100% 100%, 0 100%);
+    }
+
+    .velo {
+        background: linear-gradient(to right, rgb(0 0 0 / 0.86), rgb(0 0 0 / 0.52) 42%, rgb(0 0 0 / 0.04) 74%); /* taste-skill-ignore: velo neutro bajo texto sobre foto */
+    }
+
+    .texto {
+        gap: 32px;
+        margin-top: 0;
+        padding: calc(var(--nav-height) + 32px) var(--gutter) calc(var(--text-display) * 1.1);
+    }
+
+    .columna {
+        max-width: 37vw;
+    }
+
+    .pausa {
+        top: auto;
+        right: calc(var(--gutter) + 8px);
+        bottom: clamp(32px, 6svh, 64px);
+    }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .corte {
+        animation: abrir-corte-telefono 1100ms var(--ease-in-out) 100ms both;
+    }
+
+    .foto[data-estado="activa"] {
+        transition: clip-path 1000ms var(--ease-in-out);
+        animation: asentar 7000ms linear both;
+    }
+
+    .columna > * {
+        animation: subir 700ms var(--ease-out) both;
+        animation-delay: calc(var(--i, 0) * var(--stagger) + 520ms);
+    }
+
+    .columna > :nth-child(2) {
+        --i: 1;
+    }
+
+    .columna > :nth-child(3) {
+        --i: 2;
+    }
+
+    .pausa {
+        animation: aparecer 400ms ease 1000ms both;
+    }
+
+    @media (min-width: 1024px) {
+        .corte {
+            animation-name: abrir-corte;
+        }
+    }
+}
+
+/* Al irse la primera pantalla, la foto queda un poco atrás del texto. */
+@supports (animation-timeline: scroll()) {
+    @media (prefers-reduced-motion: no-preference) {
+        .fotos {
+            animation: alejar linear both;
+            animation-timeline: scroll(root);
+            animation-range: 0 100svh;
+        }
+    }
+}
+
+html[data-movimiento="pausado"] .foto {
+    animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .foto {
+        transition: none;
+    }
+
+    .corte,
+    .columna > * {
+        animation: aparecer 300ms ease both;
+    }
+}
+
+@keyframes abrir-corte {
+    from {
+        clip-path: polygon(calc(100% + var(--corte)) 0, 100% 0, 100% 100%, 100% 100%);
+    }
+
+    to {
+        clip-path: polygon(var(--corte) 0, 100% 0, 100% 100%, 0 100%);
+    }
+}
+
+@keyframes abrir-corte-telefono {
+    from {
+        clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+    }
+
+    to {
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - var(--corte)));
+    }
+}
+
+@keyframes asentar {
+    from {
+        transform: scale(1.08);
+    }
+
+    to {
+        transform: scale(1);
+    }
+}
+
+@keyframes subir {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes aparecer {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes alejar {
+    to {
+        transform: translateY(8%);
+    }
+}

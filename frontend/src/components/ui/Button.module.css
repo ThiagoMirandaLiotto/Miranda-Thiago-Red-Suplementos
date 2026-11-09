@@ -1,0 +1,274 @@
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6em;
+    min-height: var(--control-height);
+    padding: 0 1.25rem;
+    border: 0;
+    border-radius: var(--radius);
+    font-family: var(--font-display);
+    font-size: var(--text-body);
+    font-weight: 700;
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    transition:
+        transform var(--duration-press) var(--ease-out),
+        background-color var(--duration-fast) ease,
+        color var(--duration-fast) ease;
+}
+
+.button:active:not(:disabled) {
+    transform: scale(0.97);
+}
+
+.button:disabled {
+    cursor: not-allowed;
+}
+
+.button > svg {
+    flex: none;
+}
+
+.md {
+    min-height: var(--control-height);
+}
+
+.lg {
+    min-height: var(--control-height-lg);
+    padding: 0 1.5rem;
+    font-size: var(--text-body);
+}
+
+.fullWidth {
+    width: 100%;
+}
+
+/* Naranja Energía: solo para la acción principal, con texto negro por contraste */
+.primary {
+    background: var(--color-accent);
+    color: var(--color-ink-on-accent);
+}
+
+.secondary {
+    background: var(--color-ink);
+    color: var(--color-ground);
+}
+
+/* Se lee como un enlace: sin relleno lateral, alineado con el texto que lo rodea. */
+.ghost {
+    padding-left: 0;
+    padding-right: 0;
+    background: transparent;
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-thickness: 0.08em;
+    text-underline-offset: 0.25em;
+}
+
+.tonal {
+    background: var(--color-sunk);
+    color: var(--color-ink);
+}
+
+.danger {
+    background: var(--color-danger);
+    color: var(--color-white);
+}
+
+/* Acción destructiva dentro de una fila: sin relleno, para no llenar la tabla de rojo. */
+.dangerGhost {
+    background: transparent;
+    color: var(--color-danger);
+}
+
+:global(.on-field) .secondary {
+    background: var(--color-ink-on-field);
+    color: var(--color-field);
+}
+
+:global(.on-field) .tonal {
+    background: var(--color-field-raised);
+    color: var(--color-ink-on-field);
+}
+
+.primary:disabled,
+.secondary:disabled,
+.tonal:disabled,
+.danger:disabled {
+    background: var(--color-disabled);
+    color: var(--color-ink-disabled);
+}
+
+.primary[aria-busy="true"],
+.danger[aria-busy="true"] {
+    cursor: progress;
+}
+
+.primary[aria-busy="true"]:disabled {
+    background: var(--color-accent);
+    color: var(--color-ink-on-accent);
+}
+
+.danger[aria-busy="true"]:disabled {
+    background: var(--color-danger);
+    color: var(--color-white);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .primary:hover:not(:disabled) {
+        background: var(--color-accent-hover);
+    }
+
+    .secondary:hover:not(:disabled) {
+        background: var(--color-field-hover);
+    }
+
+    :global(.on-field) .secondary:hover:not(:disabled) {
+        background: var(--color-white);
+    }
+
+    .tonal:hover:not(:disabled) {
+        background: var(--color-sunk-hover);
+    }
+
+    :global(.on-field) .tonal:hover:not(:disabled) {
+        background: var(--color-field-hover);
+    }
+
+    .danger:hover:not(:disabled) {
+        background: var(--color-danger-hover);
+    }
+
+    .dangerGhost:hover:not(:disabled) {
+        background: var(--color-danger-tint);
+    }
+
+    .ghost:hover {
+        text-decoration-thickness: 0.14em;
+    }
+}
+
+/* Sitio público: el botón toma la inclinación de "RED" y al pasar el mouse lo barre el tono de hover.
+   Su contenido se endereza con la inclinación contraria. El foco sigue la misma forma.
+   El panel de administración conserva el botón recto: se usa todos los días. */
+:global([data-sitio="publico"]) .button {
+    --relleno: transparent;
+    --relleno-hover: transparent;
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background: var(--relleno);
+    transform: skewX(var(--lean));
+}
+
+:global([data-sitio="publico"]) .button > * {
+    transform: skewX(calc(var(--lean) * -1));
+}
+
+:global([data-sitio="publico"]) .button:active:not(:disabled) {
+    transform: skewX(var(--lean)) scale(0.97);
+}
+
+:global([data-sitio="publico"]) .primary {
+    --relleno: var(--color-accent);
+    --relleno-hover: var(--color-accent-hover);
+}
+
+:global([data-sitio="publico"]) .secondary {
+    --relleno: var(--color-ink);
+    --relleno-hover: var(--color-field-hover);
+}
+
+:global([data-sitio="publico"]) .tonal {
+    --relleno: var(--color-sunk);
+    --relleno-hover: var(--color-sunk-hover);
+}
+
+:global([data-sitio="publico"] .on-field) .secondary {
+    --relleno: var(--color-ink-on-field);
+    --relleno-hover: var(--color-white);
+}
+
+:global([data-sitio="publico"] .on-field) .tonal {
+    --relleno: var(--color-field-raised);
+    --relleno-hover: var(--color-field-hover);
+}
+
+:global([data-sitio="publico"]) .button:disabled {
+    --relleno: var(--color-disabled);
+}
+
+/* Inclinado sobresale unos píxeles de su caja: a todo el ancho deja ese margen. */
+:global([data-sitio="publico"]) .fullWidth {
+    width: calc(100% - 10px);
+    margin-inline: 5px;
+}
+
+/* Los que se leen como enlace no llevan forma. */
+:global([data-sitio="publico"]) .ghost,
+:global([data-sitio="publico"]) .ghost > * {
+    transform: none;
+}
+
+:global([data-sitio="publico"]) .ghost:active:not(:disabled) {
+    transform: scale(0.97);
+}
+
+:global([data-sitio="publico"]) .button::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: var(--relleno-hover);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform var(--duration-exit) var(--ease-out);
+}
+
+:global([data-sitio="publico"]) .button > svg {
+    transition: transform var(--duration-enter) var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    :global([data-sitio="publico"]) .button:hover:not(:disabled) {
+        background: var(--relleno);
+    }
+
+    :global([data-sitio="publico"]) .button:hover:not(:disabled)::after {
+        transform: scaleX(1);
+        transform-origin: left;
+        transition: transform 260ms var(--ease-out);
+    }
+
+    :global([data-sitio="publico"]) .button:hover:not(:disabled) > svg {
+        transform: skewX(calc(var(--lean) * -1)) rotate(var(--lean)) scale(1.12);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    :global([data-sitio="publico"]) .button:active:not(:disabled) {
+        transform: skewX(var(--lean));
+    }
+
+    :global([data-sitio="publico"]) .button::after,
+    :global([data-sitio="publico"]) .button > svg {
+        transition: none;
+    }
+
+    :global([data-sitio="publico"]) .button:hover:not(:disabled) > svg {
+        transform: skewX(calc(var(--lean) * -1));
+    }
+
+    .button {
+        transition: background-color var(--duration-fast) ease, color var(--duration-fast) ease;
+    }
+
+    .button:active:not(:disabled) {
+        transform: none;
+    }
+}

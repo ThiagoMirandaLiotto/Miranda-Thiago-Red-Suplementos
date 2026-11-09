@@ -1,0 +1,45 @@
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: var(--text-small);
+    font-weight: 700;
+    line-height: 1.3;
+    white-space: nowrap;
+}
+
+.badge > svg {
+    flex: none;
+}
+
+.badge[data-tono="neutral"] {
+    color: var(--color-ink-muted);
+}
+
+.badge[data-tono="success"] {
+    color: var(--color-success);
+}
+
+.badge[data-tono="warning"] {
+    color: var(--color-warning);
+}
+
+.badge[data-tono="danger"] {
+    color: var(--color-danger);
+}
+
+:global(.on-field) .badge[data-tono="neutral"] {
+    color: var(--color-ink-on-field-muted);
+}
+
+:global(.on-field) .badge[data-tono="success"] {
+    color: var(--color-success-on-field);
+}
+
+:global(.on-field) .badge[data-tono="warning"] {
+    color: var(--color-warning-on-field);
+}
+
+:global(.on-field) .badge[data-tono="danger"] {
+    color: var(--color-danger-on-field);
+}

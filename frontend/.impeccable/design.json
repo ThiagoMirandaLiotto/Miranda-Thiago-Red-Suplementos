@@ -1,0 +1,443 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-07T20:37:43.492Z",
+  "title": "Design System: RED Suplementos",
+  "extensions": {
+    "colorMeta": {
+      "naranja-energia": {
+        "role": "primary",
+        "displayName": "Naranja Energía",
+        "canonical": "#d47e30",
+        "tonalRamp": [
+          "#3f250d",
+          "#6e4017",
+          "#9c5b20",
+          "#cb762a",
+          "#db9352",
+          "#e5b080",
+          "#efd0b3",
+          "#fbf2ea"
+        ]
+      },
+      "naranja-energia-hover": {
+        "role": "primary",
+        "displayName": "Naranja Energía oscuro",
+        "canonical": "#c46f22",
+        "tonalRamp": [
+          "#41250b",
+          "#714014",
+          "#a15b1c",
+          "#d17624",
+          "#e0934d",
+          "#e8b07d",
+          "#f1d0b1",
+          "#fbf2e9"
+        ]
+      },
+      "gris-logo": {
+        "role": "neutral",
+        "displayName": "Gris del logo",
+        "canonical": "#e8e8e8",
+        "tonalRamp": [
+          "#262626",
+          "#424242",
+          "#5e5e5e",
+          "#7a7a7a",
+          "#969696",
+          "#b3b3b3",
+          "#d1d1d1",
+          "#f2f2f2"
+        ]
+      },
+      "papel": {
+        "role": "neutral",
+        "displayName": "Papel",
+        "canonical": "#f5f5f5",
+        "tonalRamp": [
+          "#262626",
+          "#424242",
+          "#5e5e5e",
+          "#7a7a7a",
+          "#969696",
+          "#b3b3b3",
+          "#d1d1d1",
+          "#f2f2f2"
+        ]
+      },
+      "hundido": {
+        "role": "neutral",
+        "displayName": "Hundido",
+        "canonical": "#dcdcdc",
+        "tonalRamp": [
+          "#262626",
+          "#424242",
+          "#5e5e5e",
+          "#7a7a7a",
+          "#969696",
+          "#b3b3b3",
+          "#d1d1d1",
+          "#f2f2f2"
+        ]
+      },
+      "tinta": {
+        "role": "neutral",
+        "displayName": "Tinta",
+        "canonical": "#000000",
+        "tonalRamp": [
+          "#262626",
+          "#424242",
+          "#5e5e5e",
+          "#7a7a7a",
+          "#969696",
+          "#b3b3b3",
+          "#d1d1d1",
+          "#f2f2f2"
+        ]
+      },
+      "tinta-suave": {
+        "role": "neutral",
+        "displayName": "Tinta suave",
+        "canonical": "#474747",
+        "tonalRamp": [
+          "#262626",
+          "#424242",
+          "#5e5e5e",
+          "#7a7a7a",
+          "#969696",
+          "#b3b3b3",
+          "#d1d1d1",
+          "#f2f2f2"
+        ]
+      },
+      "campo": {
+        "role": "neutral",
+        "displayName": "Campo",
+        "canonical": "#0b0b0b",
+        "tonalRamp": [
+          "#262626",
+          "#424242",
+          "#5e5e5e",
+          "#7a7a7a",
+          "#969696",
+          "#b3b3b3",
+          "#d1d1d1",
+          "#f2f2f2"
+        ]
+      },
+      "campo-elevado": {
+        "role": "neutral",
+        "displayName": "Campo elevado",
+        "canonical": "#1a1a1a",
+        "tonalRamp": [
+          "#262626",
+          "#424242",
+          "#5e5e5e",
+          "#7a7a7a",
+          "#969696",
+          "#b3b3b3",
+          "#d1d1d1",
+          "#f2f2f2"
+        ]
+      },
+      "tinta-palida-suave": {
+        "role": "neutral",
+        "displayName": "Tinta pálida suave",
+        "canonical": "#a8a8a8",
+        "tonalRamp": [
+          "#262626",
+          "#424242",
+          "#5e5e5e",
+          "#7a7a7a",
+          "#969696",
+          "#b3b3b3",
+          "#d1d1d1",
+          "#f2f2f2"
+        ]
+      },
+      "exito": {
+        "role": "status",
+        "displayName": "Éxito",
+        "canonical": "#1d6b3a",
+        "tonalRamp": [
+          "#103c21",
+          "#1c6839",
+          "#289450",
+          "#34c168",
+          "#5ad287",
+          "#87dea7",
+          "#b7ebca",
+          "#ebfaf0"
+        ]
+      },
+      "peligro": {
+        "role": "status",
+        "displayName": "Peligro",
+        "canonical": "#b3261e",
+        "tonalRamp": [
+          "#420e0b",
+          "#721813",
+          "#a2221b",
+          "#d22d23",
+          "#e1544c",
+          "#e9827c",
+          "#f2b4b0",
+          "#fbeae9"
+        ]
+      },
+      "aviso": {
+        "role": "status",
+        "displayName": "Aviso",
+        "canonical": "#8a4b00",
+        "tonalRamp": [
+          "#4d2a00",
+          "#854800",
+          "#bd6700",
+          "#f58500",
+          "#ffa02e",
+          "#ffb966",
+          "#ffd5a3",
+          "#fff3e5"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Títulos, marquesina e índice de categorías del sitio público, en itálica 900 y mayúsculas."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Nombre del destacado, precios grandes y títulos del panel."
+      },
+      "lead": {
+        "displayName": "Lead",
+        "purpose": "Frase del hero, bajadas, subtítulos y nombres de tarjeta."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Texto corrido, botones, links y labels."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Metadatos, badges de stock, contadores y ayudas."
+      }
+    },
+    "shadows": [
+      {
+        "name": "flotante",
+        "value": "0 18px 48px rgb(0 0 0 / 0.28), 0 2px 8px rgb(0 0 0 / 0.18)",
+        "purpose": "Diálogo de confirmación y avisos."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.23, 1, 0.32, 1)",
+        "purpose": "Entradas, presión de botones y cambios de estado."
+      },
+      {
+        "name": "ease-in-out",
+        "value": "cubic-bezier(0.77, 0, 0.175, 1)",
+        "purpose": "Telón, barridos de fotos y pulso de los skeletons."
+      },
+      {
+        "name": "duration-press",
+        "value": "140ms",
+        "purpose": "Presión de botones (scale 0.97)."
+      },
+      {
+        "name": "duration-fast",
+        "value": "160ms",
+        "purpose": "Hover y cambios de color."
+      },
+      {
+        "name": "duration-enter",
+        "value": "220ms",
+        "purpose": "Entrada del diálogo y del menú."
+      },
+      {
+        "name": "duration-exit",
+        "value": "150ms",
+        "purpose": "Salida del diálogo y del menú (más rápida que la entrada)."
+      },
+      {
+        "name": "duration-reveal",
+        "value": "600ms",
+        "purpose": "Entradas escalonadas de la landing (70ms entre partes)."
+      },
+      {
+        "name": "lean",
+        "value": "-7deg",
+        "purpose": "La inclinación del RED del logo: el corte de fotos, botones, telón y barridos."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "560px",
+        "value": "560px"
+      },
+      {
+        "name": "720px",
+        "value": "720px"
+      },
+      {
+        "name": "860px",
+        "value": "860px"
+      },
+      {
+        "name": "900px",
+        "value": "900px"
+      },
+      {
+        "name": "960px",
+        "value": "960px"
+      },
+      {
+        "name": "1024px",
+        "value": "1024px"
+      },
+      {
+        "name": "1100px",
+        "value": "1100px"
+      },
+      {
+        "name": "1280px",
+        "value": "1280px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Botón primario",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Acción principal y Comprar: naranja con texto negro.",
+      "html": "<button class=\"ds-btn-primary\">Escribinos por Instagram</button>",
+      "css": ".ds-btn-primary { min-height: 48px; padding: 0 20px; border: 0; border-radius: 0; background: #d47e30; color: #000; font: 700 17px/1.2 \"Montserrat Variable\", Montserrat, system-ui, sans-serif; transition: transform 140ms cubic-bezier(0.23, 1, 0.32, 1), background-color 160ms ease; } .ds-btn-primary:hover { background: #c46f22; } .ds-btn-primary:active { transform: scale(0.97); } .ds-btn-primary:focus-visible { outline: 3px solid #000; outline-offset: 3px; }"
+    },
+    {
+      "name": "Botón secundario",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Reintentar y Consultar disponibilidad.",
+      "html": "<button class=\"ds-btn-secondary\">Reintentar</button>",
+      "css": ".ds-btn-secondary { min-height: 48px; padding: 0 20px; border: 0; border-radius: 0; background: #000; color: #e8e8e8; font: 700 17px/1.2 \"Montserrat Variable\", Montserrat, system-ui, sans-serif; transition: transform 140ms cubic-bezier(0.23, 1, 0.32, 1), background-color 160ms ease; } .ds-btn-secondary:hover { background: #262626; } .ds-btn-secondary:active { transform: scale(0.97); } .ds-btn-secondary:focus-visible { outline: 3px solid #000; outline-offset: 3px; }"
+    },
+    {
+      "name": "Botón tonal",
+      "kind": "button",
+      "refersTo": "button-tonal",
+      "description": "Editar, Ver catálogo y Cancelar en el diálogo.",
+      "html": "<button class=\"ds-btn-tonal\">Editar</button>",
+      "css": ".ds-btn-tonal { min-height: 48px; padding: 0 20px; border: 0; border-radius: 0; background: #dcdcdc; color: #000; font: 700 17px/1.2 \"Montserrat Variable\", Montserrat, system-ui, sans-serif; transition: transform 140ms cubic-bezier(0.23, 1, 0.32, 1), background-color 160ms ease; } .ds-btn-tonal:hover { background: #cfcfcf; } .ds-btn-tonal:active { transform: scale(0.97); } .ds-btn-tonal:focus-visible { outline: 3px solid #000; outline-offset: 3px; }"
+    },
+    {
+      "name": "Campo de texto",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Label visible arriba, fondo gris del logo sobre papel.",
+      "html": "<label class=\"ds-field\"><span class=\"ds-label\">Precio <small>(obligatorio)</small></span><input class=\"ds-input\" inputmode=\"decimal\" placeholder=\"25000,50\"></label>",
+      "css": ".ds-field { display: grid; gap: 6px; padding: 20px; background: #f5f5f5; font-family: \"Open Sans Variable\", system-ui, sans-serif; } .ds-label { font: 700 17px \"Montserrat Variable\", Montserrat, system-ui, sans-serif; } .ds-label small { font: 400 14px \"Open Sans Variable\", sans-serif; color: #474747; } .ds-input { min-height: 48px; padding: 0 14px; border: 2px solid transparent; border-radius: 0; background: #e8e8e8; color: #000; font-size: 17px; } .ds-input:hover { border-color: #b8b8b8; } .ds-input:focus-visible { outline: 3px solid #000; outline-offset: 2px; border-color: #000; }"
+    },
+    {
+      "name": "Navegación pública",
+      "kind": "nav",
+      "refersTo": "nav-publica",
+      "description": "Barra negra con links que ruedan y una sola acción naranja.",
+      "html": "<nav class=\"ds-nav\"><strong class=\"ds-wordmark\">RED</strong><a href=\"#\" aria-current=\"page\">Inicio</a><a href=\"#\">Nosotros</a><a href=\"#\">Productos</a><a href=\"#\">Contacto</a><a class=\"ds-nav-cta\" href=\"#\">Escribinos</a></nav>",
+      "css": ".ds-nav { display: flex; align-items: center; gap: 28px; height: 72px; padding: 0 32px; background: #0b0b0b; color: #e8e8e8; font: 600 17px \"Montserrat Variable\", Montserrat, system-ui, sans-serif; } .ds-wordmark { margin-right: auto; font-style: italic; font-weight: 900; font-size: 28px; } .ds-nav a { color: #e8e8e8; text-decoration: none; } .ds-nav a[aria-current] { text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 6px; } .ds-nav a:hover { text-decoration: underline; text-underline-offset: 6px; } .ds-nav .ds-nav-cta { padding: 13px 20px; background: #d47e30; color: #000; font-weight: 700; transform: skewX(-7deg); } .ds-nav .ds-nav-cta:hover { background: #c46f22; text-decoration: none; }"
+    },
+    {
+      "name": "Corte a 7°",
+      "kind": "custom",
+      "refersTo": "campo",
+      "description": "Foto recortada con la inclinación del RED del logo, sobre el campo negro.",
+      "html": "<div class=\"ds-panel\"><div class=\"ds-corte\"></div></div>",
+      "css": ".ds-panel { padding: 32px; background: #0b0b0b; } .ds-corte { width: 220px; aspect-ratio: 4 / 5; background: #d47e30; clip-path: polygon(15.35% 0, 100% 0, 84.65% 100%, 0 100%); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Siete grados",
+    "overview": "Los gimnasios más importantes del mundo tienen sitios negros, con fotos enormes, títulos gigantes en mayúsculas y mucho movimiento. RED Suplementos habla ese idioma, pero con algo propio: **la inclinación de 7° del «RED» del logo, medida en sus trazos, es el corte de todo.** Fotos, botones, el telón entre pantallas y el barrido de cada hover van a ese ángulo.\n\n- **Las fotos son siempre del gimnasio real:** paredes naranjas, socios entrenando, la fachada de Rogelio Yrurtia 6028 y los suplementos sobre los discos.\n- **El negro es el campo del sitio público.** El gris del logo entra como capítulo de contraste donde se elige y se compra: los productos y el catálogo.\n- **El naranja significa «actuá»,** y las paredes del gimnasio en las fotos lo acompañan.\n\nEl panel de administración es otro mundo a propósito: gris claro, botones rectos y sin animaciones de entrada, porque se usa todos los días.",
+    "keyCharacteristics": [
+      "**Motivo único:** el corte a 7°, en cuatro escalas (la foto del hero, las fotos, los botones y el separador de la marquesina).",
+      "**Títulos:** Montserrat 900 itálica en mayúsculas, a más de seis veces el tamaño del texto.",
+      "**Acento único:** Naranja Energía, solo en llamados a la acción y siempre con texto negro.",
+      "**Movimiento con trabajo:** cada animación confirma algo, muestra de dónde viene algo o es parte del momento principal, y todo tiene su versión con movimiento reducido."
+    ],
+    "rules": [
+      {
+        "name": "The Naranja Único Rule",
+        "body": "El naranja aparece solo en botones de acción. Nunca como texto, nunca en el logo ni en estados, nunca decorativo.",
+        "section": "colors"
+      },
+      {
+        "name": "The Capítulo Rule",
+        "body": "El negro y el gris no se mezclan de a poco: cada sección es un campo entero, y el paso de uno al otro es un borde a 7°. El sitio público empieza y termina en negro.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Velo Neutro Rule",
+        "body": "Texto sobre foto solo con un velo negro debajo, y medido: cada título, contra el píxel más desfavorable de cada foto.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Inclinación Rule",
+        "body": "Solo los títulos grandes van en itálica 900. El texto de lectura nunca va en itálica.",
+        "section": "typography"
+      },
+      {
+        "name": "The Cinco Tamaños Rule",
+        "body": "El sitio usa cinco tamaños (14, 17, 24, 36 y 109 px a 1440 px de ancho). Un tamaño nuevo reemplaza a otro; no se suma.",
+        "section": "typography"
+      },
+      {
+        "name": "The Dos Renglones Rule",
+        "body": "Ningún título pasa de dos renglones en ningún ancho. En los títulos largos, los cortes de renglón se deciden a mano.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Hover Honesto Rule",
+        "body": "Todo hover vive detrás de `(hover: hover) and (pointer: fine)`. En pantallas táctiles, lo que el hover mostraría ya está a la vista.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Se Puede Parar Rule",
+        "body": "Lo que se mueve solo tiene un botón «Pausar animaciones» (WCAG 2.2.2), que se recuerda entre visitas. Los bucles se detienen fuera de pantalla y con la pestaña oculta.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Movimiento Reducido Rule",
+        "body": "Con `prefers-reduced-motion`, nada se traslada ni corre en bucle: no hay telón, los títulos y las fotos están desde el principio y el escenario es una foto fija.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Panel Quieto Rule",
+        "body": "El panel de administración no recibe nada de esto: solo la respuesta de los controles, el diálogo, los avisos y los skeletons.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Plano en Reposo Rule",
+        "body": "Ninguna tarjeta, botón ni sección lleva sombra en reposo. Si algo necesita separarse, cambia de tono.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do poner texto negro sobre el Naranja Energía (#d47e30).",
+      "Do usar fotos reales de RED GYM o del stock de la tienda. Si un producto no tiene foto, va su placa dibujada.",
+      "Do cortar a 7° (`--lean`, `--lean-tan`): si una forma nueva necesita inclinación, usa esa.",
+      "Do acompañar cada estado (stock, éxito, error) de texto e ícono.",
+      "Do restringir el hover a `(hover: hover) and (pointer: fine)` y dar una versión a `prefers-reduced-motion`.",
+      "Do medir el texto que va sobre una foto: axe no lo evalúa."
+    ],
+    "donts": [
+      "Don't usar texto blanco sobre el naranja, ni el naranja como texto.",
+      "Don't teñir el logo de naranja ni deformarlo. Las variantes son positiva, negativa, compacta y sticker.",
+      "Don't usar fondos crema, degradés decorativos, sombras en reposo ni esquinas redondeadas.",
+      "Don't usar mayúsculas espaciadas como etiqueta (eyebrow) arriba de un título.",
+      "Don't poner un título fijo sobre una foto que se mueve, ni nada encima de un título.",
+      "Don't mostrar WhatsApp: el canal de la tienda es el mensaje directo de Instagram.",
+      "Don't agregar animaciones de entrada ni formas inclinadas en el panel de administración."
+    ]
+  }
+}

@@ -1,0 +1,148 @@
+/* El panel se usa decenas de veces por día: sin animaciones, solo cambios de tono. */
+.tabla {
+    display: none;
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--color-paper);
+}
+
+.tabla th,
+.tabla td {
+    padding: 12px 16px;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.tabla thead th {
+    padding-top: 14px;
+    padding-bottom: 14px;
+    background: var(--color-sunk);
+    font-family: var(--font-display);
+    font-size: var(--text-small);
+    font-weight: 700;
+}
+
+.tabla tbody tr + tr {
+    border-top: 1px solid var(--color-sunk);
+}
+
+.tabla tbody th {
+    font-weight: 400;
+}
+
+.numero {
+    text-align: right !important;
+    white-space: nowrap;
+}
+
+.producto {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-width: 0;
+}
+
+.miniatura {
+    flex: none;
+    width: 56px;
+}
+
+.textos {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2px;
+    min-width: 0;
+}
+
+.nombre {
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+.detalle {
+    overflow-wrap: anywhere;
+    font-size: var(--text-small);
+    color: var(--color-ink-muted);
+}
+
+.stock {
+    display: grid;
+    gap: 2px;
+    white-space: nowrap;
+}
+
+.minimo {
+    font-size: var(--text-small);
+    color: var(--color-ink-muted);
+}
+
+.acciones {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.acciones > * {
+    min-height: 44px;
+    padding: 0 14px;
+    font-size: var(--text-small);
+}
+
+.lista {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.item {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+    padding: 16px;
+    background: var(--color-paper);
+}
+
+.datos {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    gap: 8px 28px;
+}
+
+.datos dt {
+    font-size: var(--text-small);
+    color: var(--color-ink-muted);
+}
+
+.datos dd {
+    margin: 0;
+    font-weight: 700;
+}
+
+.item .acciones {
+    justify-content: stretch;
+}
+
+.item .acciones > * {
+    flex: 1;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .tabla tbody tr:hover {
+        background: var(--color-paper-hover);
+    }
+}
+
+@media (min-width: 860px) {
+    .tabla {
+        display: table;
+    }
+
+    .lista {
+        display: none;
+    }
+}

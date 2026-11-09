@@ -1,0 +1,114 @@
+.field {
+    display: grid;
+    align-content: start;
+    gap: 6px;
+}
+
+.encabezado {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.label {
+    font-family: var(--font-display);
+    font-size: var(--text-body);
+    font-weight: 700;
+}
+
+.requerido {
+    font-family: var(--font-text);
+    font-size: var(--text-small);
+    font-weight: 400;
+    color: var(--color-ink-muted);
+}
+
+.contador {
+    font-size: var(--text-small);
+    color: var(--color-ink-muted);
+    font-variant-numeric: tabular-nums;
+}
+
+.control {
+    width: 100%;
+    min-height: var(--control-height);
+    padding: 0 14px;
+    border: 2px solid transparent;
+    border-radius: var(--radius);
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-size: var(--text-body);
+    transition: border-color var(--duration-fast) ease, background-color var(--duration-fast) ease;
+}
+
+textarea.control {
+    min-height: 132px;
+    padding: 12px 14px;
+    line-height: var(--leading-body);
+    resize: vertical;
+}
+
+select.control {
+    appearance: none;
+    padding-right: 44px;
+    background-image: none;
+    cursor: pointer;
+}
+
+.selectWrap {
+    position: relative;
+}
+
+.selectWrap > svg {
+    position: absolute;
+    top: 50%;
+    right: 14px;
+    translate: 0 -50%;
+    pointer-events: none;
+}
+
+.control::placeholder {
+    color: var(--color-placeholder);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .control:hover {
+        border-color: var(--color-border-hover);
+    }
+}
+
+.control:focus-visible {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 2px;
+    border-color: var(--color-ink);
+}
+
+.control:disabled {
+    background: var(--color-sunk);
+    color: var(--color-ink-muted);
+    cursor: not-allowed;
+}
+
+.field[data-invalid="true"] .control {
+    border-color: var(--color-danger);
+}
+
+.ayuda {
+    font-size: var(--text-small);
+    color: var(--color-ink-muted);
+}
+
+.error {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    font-size: var(--text-small);
+    font-weight: 600;
+    color: var(--color-danger);
+}
+
+.error > svg {
+    flex: none;
+    margin-top: 2px;
+}

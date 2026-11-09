@@ -1,0 +1,41 @@
+.encabezado {
+    display: grid;
+    gap: 12px;
+    margin-bottom: 28px;
+}
+
+.volver {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    justify-self: start;
+    min-height: 44px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.fila {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.titulo {
+    font-size: var(--text-title);
+    font-weight: 800;
+    line-height: 1.1;
+}
+
+.titulo:focus {
+    outline: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .volver:hover {
+        text-decoration: underline;
+        text-underline-offset: 6px;
+    }
+}

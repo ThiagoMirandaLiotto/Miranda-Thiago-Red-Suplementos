@@ -1,0 +1,23 @@
+export const Messages = Object.freeze({
+    PRODUCT_NOT_FOUND: "El producto no existe.",
+    CATEGORY_NOT_FOUND: "La categoría no existe o está inactiva.",
+    INVALID_DATA: "Los datos enviados son inválidos.",
+    INVALID_ID: "El ID debe ser un número entero positivo.",
+    INVALID_NAME: "El nombre es obligatorio y debe ser un texto de hasta 120 caracteres.",
+    INVALID_CATEGORY: "idCategoria debe ser un número entero positivo.",
+    INVALID_PRICE: "El precio debe ser un número mayor que cero, de hasta dos decimales y menor o igual a 1000000000.",
+    INVALID_STOCK: "El stock es obligatorio y debe ser un número entero mayor o igual a cero.",
+    INVALID_MINIMUM_STOCK: "stockMinimo debe ser un número entero mayor o igual a cero.",
+    INVALID_TEXT: "Marca y sabor admiten hasta 120 caracteres; descripción e imagen, hasta 2000. Deben ser textos.",
+    UNKNOWN_FIELDS: "El cuerpo contiene campos no permitidos. No se pueden asignar idProducto ni activo.",
+    DUPLICATED_RESOURCE: "Ya existe un producto activo con el mismo nombre, marca, sabor y categoría.",
+    INVALID_JSON: "El cuerpo de la solicitud contiene un JSON inválido.",
+    UNSUPPORTED_MEDIA_TYPE: "El cuerpo debe enviarse como application/json con una codificación admitida y sin compresión.",
+    PAYLOAD_TOO_LARGE: "El cuerpo de la solicitud supera el límite de 100 KB.",
+    ROUTE_NOT_FOUND: "La ruta solicitada no existe.",
+    METHOD_NOT_ALLOWED: "El método HTTP no está permitido para esta ruta.",
+    INTERNAL_SERVER_ERROR: "Ocurrió un error interno en el servidor.",
+    SERVER_STARTED: "API RED SUPLEMENTOS iniciada en el puerto",
+    SERVER_START_ERROR: "No se pudo iniciar el servidor.",
+    INVALID_PORT: "PORT debe ser un entero entre 1 y 65535."
+});

@@ -1,0 +1,6 @@
+.icono {
+    display: inline-block;
+    flex: none;
+    background-color: currentColor;
+    mask: url("../../assets/icons/instagram.svg") center / contain no-repeat;
+}

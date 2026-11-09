@@ -1,0 +1,97 @@
+/* La cabecera negra continúa la barra y baja con un borde a la inclinación del logo. */
+.encabezado {
+    --corte: calc(100vw * var(--lean-tan));
+    display: grid;
+    gap: 16px;
+    padding: calc(var(--nav-height) + clamp(32px, 6vw, 72px)) var(--gutter) calc(var(--corte) + clamp(24px, 4vw, 48px));
+    background: var(--color-field);
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--corte)), 0 100%);
+}
+
+.lead {
+    max-width: 40ch;
+    font-size: var(--text-lead);
+    line-height: 1.35;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .lead {
+        animation: subir-bajada 700ms var(--ease-out) 520ms both;
+    }
+}
+
+@keyframes subir-bajada {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+.cuerpo {
+    display: grid;
+    gap: 32px;
+    padding: 16px var(--gutter) var(--section-gap);
+}
+
+.grilla {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 48px 24px;
+}
+
+/* Las tarjetas aparecen en orden al llegar los datos o al entrar en un filtro. */
+.tarjeta {
+    transition:
+        opacity 400ms var(--ease-out),
+        transform 400ms var(--ease-out);
+    transition-delay: calc(var(--i, 0) * 50ms);
+}
+
+@starting-style {
+    .tarjeta {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .tarjeta {
+        transition: opacity 300ms ease;
+        transition-delay: 0ms;
+    }
+
+    @starting-style {
+        .tarjeta {
+            transform: none;
+        }
+    }
+}
+
+.esqueleto {
+    display: grid;
+    align-content: start;
+    gap: 14px;
+}
+
+@media (min-width: 560px) {
+    .grilla {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 960px) {
+    .grilla {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 1280px) {
+    .grilla {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}

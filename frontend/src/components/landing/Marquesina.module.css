@@ -1,0 +1,61 @@
+.banda {
+    position: relative;
+    z-index: 2;
+    overflow: hidden;
+    padding: clamp(14px, 2vw, 28px) 0;
+    background: var(--color-ground);
+    color: var(--color-ink);
+}
+
+.pista {
+    display: flex;
+    width: max-content;
+}
+
+.grupo {
+    display: flex;
+    flex: none;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.frase {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+}
+
+/* El separador es el motivo en tamaño de texto. */
+.frase::after {
+    content: "";
+    flex: none;
+    width: 0.42em;
+    height: 0.62em;
+    margin-inline: 0.5em;
+    background: var(--color-ink);
+    transform: skewX(var(--lean));
+}
+
+/* El avance usa "translate" y la inclinación por scroll usa "transform": así no se pisan. */
+@media (prefers-reduced-motion: no-preference) {
+    .pista {
+        animation: correr 48s linear infinite;
+    }
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .banda:hover .pista {
+        animation-play-state: paused;
+    }
+}
+
+@keyframes correr {
+    from {
+        translate: 0;
+    }
+
+    to {
+        translate: -50%;
+    }
+}

@@ -1,0 +1,19 @@
+{
+    "name": "red-suplementos-backend",
+    "version": "1.0.0",
+    "description": "Entrega 2: API MVC del cat\u00e1logo de RED SUPLEMENTOS",
+    "main": "src/server.js",
+    "scripts": {
+        "start": "node src/server.js",
+        "dev": "node --watch src/server.js",
+        "test": "node --test"
+    },
+    "type": "module",
+    "dependencies": {
+        "express": "5.2.1"
+    },
+    "private": true,
+    "engines": {
+        "node": ">=22"
+    }
+}

@@ -1,0 +1,26 @@
+.skeleton {
+    display: block;
+    background: var(--color-sunk);
+    border-radius: var(--radius);
+    animation: pulso 1100ms var(--ease-in-out) infinite alternate;
+}
+
+:global(.on-field) .skeleton {
+    background: var(--color-field-raised);
+}
+
+@keyframes pulso {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0.5;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .skeleton {
+        animation: none;
+    }
+}

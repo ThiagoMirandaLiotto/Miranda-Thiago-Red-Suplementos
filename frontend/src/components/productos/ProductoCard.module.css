@@ -1,0 +1,72 @@
+.card {
+    position: relative;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: 16px;
+    min-width: 0;
+}
+
+.cuerpo {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto 1fr auto;
+    gap: 6px;
+    min-width: 0;
+}
+
+.nombre {
+    font-size: var(--text-lead);
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.detalle {
+    font-size: var(--text-small);
+    color: var(--color-ink-muted);
+}
+
+.fila {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 4px 16px;
+    margin: 6px 0 10px;
+}
+
+.precio {
+    font-family: var(--font-display);
+    font-size: var(--text-lead);
+    font-weight: 800;
+}
+
+.enlace {
+    text-decoration: underline transparent;
+    text-decoration-thickness: 0.08em;
+    text-underline-offset: 0.18em;
+    transition: text-decoration-color var(--duration-fast) ease;
+}
+
+/* Toda la tarjeta lleva a la página del producto (ver ProductoCard). */
+@media (hover: hover) and (pointer: fine) {
+    .card {
+        cursor: pointer;
+    }
+}
+
+.card img[data-zoom] {
+    transition: transform 400ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .card:hover .enlace {
+        text-decoration-color: currentColor;
+    }
+}
+
+/* Las fotos se acercan; las placas dibujadas responden por su cuenta (ver PlacaProducto). */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    .card:hover img[data-zoom] {
+        transform: scale(1.06);
+    }
+}

@@ -1,0 +1,33 @@
+.marco {
+    position: relative;
+    isolation: isolate;
+    aspect-ratio: 1;
+    overflow: hidden;
+    background: var(--color-sunk);
+}
+
+/* Barrido de tono al señalar la tarjeta, por detrás de la placa dibujada. */
+.marco::before {
+    content: "";
+    position: absolute;
+    inset: 0 -20%;
+    z-index: -1;
+    background: var(--color-sunk-hover);
+    transform: skewX(var(--lean)) scaleX(0);
+    transform-origin: right;
+    transition: transform var(--duration-exit) var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    :is(article, [data-hover-placa]):hover .marco::before {
+        transform: skewX(var(--lean)) scaleX(1);
+        transform-origin: left;
+        transition: transform 320ms var(--ease-out);
+    }
+}
+
+.foto {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}

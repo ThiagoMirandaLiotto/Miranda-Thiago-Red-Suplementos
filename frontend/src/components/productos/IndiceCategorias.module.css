@@ -1,0 +1,212 @@
+/* Aire respecto de la grilla: la pared de texto arranca una sección nueva. */
+.envoltura {
+    margin-top: calc(var(--text-display) * 0.5 + 24px);
+}
+
+.indice {
+    display: grid;
+    gap: 24px;
+}
+
+.caja {
+    position: relative;
+}
+
+.filas {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* Teléfono: imagen chica, nombre y cantidad debajo. */
+.fila {
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    grid-template-columns: 72px minmax(0, 1fr);
+    column-gap: 16px;
+    align-items: center;
+    padding: 12px 0;
+    color: var(--color-ink);
+    text-decoration: none;
+    transition:
+        color var(--duration-fast) ease,
+        transform var(--duration-press) var(--ease-out);
+}
+
+.fila:active {
+    transform: scale(0.99);
+}
+
+/* El barrido de negro de la fila señalada, a la inclinación del logo. */
+.fila::before {
+    content: "";
+    position: absolute;
+    inset: 0 -12px;
+    z-index: -1;
+    background: var(--color-field);
+    transform: skewX(var(--lean)) scaleX(0);
+    transform-origin: right;
+    transition: transform var(--duration-exit) var(--ease-out);
+}
+
+.miniatura {
+    grid-row: 1 / span 2;
+    display: block;
+}
+
+.nombre {
+    display: block;
+    font-size: min(var(--text-display), 8.6vw);
+    line-height: 1;
+}
+
+.cantidad {
+    font-size: var(--text-small);
+    color: var(--color-ink-muted);
+    transition: color var(--duration-fast) ease;
+}
+
+.flecha {
+    display: none;
+}
+
+.marco {
+    display: none;
+}
+
+.verTodos {
+    display: inline-flex;
+    align-items: center;
+    justify-self: start;
+    gap: 8px;
+    min-height: 44px;
+    font-family: var(--font-display);
+    font-weight: 700;
+}
+
+.verTodos svg {
+    transition: transform var(--duration-enter) var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .verTodos:hover svg {
+        transform: translateX(6px);
+    }
+}
+
+/* Con mouse y pantalla ancha: la pared de texto, y la vista previa sigue al puntero. */
+@media (hover: hover) and (pointer: fine) and (min-width: 1024px) {
+    .fila {
+        grid-template-columns: minmax(0, 1fr) auto auto;
+        column-gap: 32px;
+        padding: 4px 0;
+    }
+
+    .miniatura {
+        display: none;
+    }
+
+    .nombre {
+        line-height: 1.06;
+    }
+
+    .cantidad {
+        font-size: var(--text-body);
+    }
+
+    .flecha {
+        display: block;
+        opacity: 0;
+        transform: translateX(-16px);
+        transition:
+            opacity var(--duration-exit) ease,
+            transform var(--duration-exit) var(--ease-out);
+    }
+
+    .filas:has(.fila:hover) .fila:not(:hover) .nombre {
+        color: var(--color-ink-muted);
+    }
+
+    .fila:hover,
+    .fila:hover .cantidad {
+        color: var(--color-ink-on-field);
+    }
+
+    .fila:hover::before {
+        transform: skewX(var(--lean)) scaleX(1);
+        transform-origin: left;
+        transition: transform 280ms var(--ease-out);
+    }
+
+    .fila:hover .flecha {
+        opacity: 1;
+        transform: none;
+        transition:
+            opacity var(--duration-enter) ease,
+            transform 280ms var(--ease-out);
+    }
+
+    .marco {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 3;
+        display: block;
+        width: clamp(220px, 21vw, 340px);
+        aspect-ratio: 1;
+        visibility: hidden;
+        opacity: 0;
+        pointer-events: none;
+        clip-path: polygon(12.28% 0, 100% 0, 87.72% 100%, 0 100%);
+        transition:
+            opacity var(--duration-exit) ease,
+            visibility 0s linear var(--duration-exit);
+    }
+
+    .caja:has(.fila:hover) .marco {
+        visibility: visible;
+        opacity: 1;
+        transition:
+            opacity var(--duration-enter) ease,
+            visibility 0s;
+    }
+
+    .vista {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        transition: opacity 240ms ease;
+    }
+
+    .vista[data-activa="true"] {
+        opacity: 1;
+    }
+}
+
+/* El foco de teclado recibe la misma respuesta que el mouse, en cualquier pantalla. */
+.fila:focus-visible {
+    color: var(--color-ink-on-field);
+    outline-offset: 2px;
+}
+
+.fila:focus-visible .cantidad {
+    color: var(--color-ink-on-field);
+}
+
+.fila:focus-visible::before {
+    transform: skewX(var(--lean)) scaleX(1);
+    transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .fila,
+    .fila:active {
+        transform: none;
+    }
+
+    .fila::before {
+        transition: none;
+    }
+}

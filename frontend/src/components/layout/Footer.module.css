@@ -1,0 +1,197 @@
+/* La última foto del sitio es el footer: el gimnasio queda presente hasta el final. */
+.footer {
+    position: relative;
+    display: grid;
+    min-height: 100svh;
+    overflow: clip;
+    background: var(--color-field);
+}
+
+.foto {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 40%;
+}
+
+/* Velo neutro plano: garantiza contraste AA del texto en cualquier punto de la foto. */
+.footer::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: rgb(11 11 11 / 0.66);
+}
+
+.capa {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: 48px;
+    padding: 32px var(--gutter) 40px;
+}
+
+.superior {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 32px 48px;
+}
+
+.enlaces {
+    display: grid;
+    gap: 4px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.enlaces a {
+    display: inline-block;
+    padding: 6px 0;
+    font-family: var(--font-display);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.contacto {
+    display: grid;
+    align-content: start;
+    gap: 14px;
+    max-width: 30rem;
+}
+
+.titulo {
+    font-size: var(--text-lead);
+    font-style: italic;
+    font-weight: 900;
+    letter-spacing: var(--tracking-display);
+}
+
+.datos {
+    display: grid;
+    gap: 8px;
+    font-style: normal;
+}
+
+.datos p {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 10px;
+}
+
+/* Solo baja de línea la nota de las cuentas: la dirección parte su texto junto al ícono. */
+.datos p:not(:has(.nota)) {
+    flex-wrap: nowrap;
+}
+
+.datos svg,
+.datos > p > span:first-child {
+    flex: none;
+}
+
+.datos a {
+    font-weight: 600;
+    text-decoration-color: transparent;
+    transition: text-decoration-color var(--duration-fast) ease;
+}
+
+/* Sobre la foto no alcanza el gris atenuado: la jerarquía la da el tamaño, no el color. */
+.nota {
+    font-size: var(--text-small);
+}
+
+.mapa {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    justify-self: start;
+    min-height: 44px;
+    font-family: var(--font-display);
+    font-weight: 700;
+}
+
+.mapa svg {
+    transition: transform var(--duration-enter) var(--ease-out);
+}
+
+.inferior {
+    align-self: end;
+}
+
+.logo {
+    width: min(62vw, 920px);
+    height: auto;
+    transform-origin: left bottom;
+}
+
+.legal {
+    margin-top: 16px;
+    font-size: var(--text-small);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .datos a:hover {
+        text-decoration-color: currentColor;
+    }
+
+    .mapa:hover svg {
+        transform: translate(3px, -3px);
+    }
+}
+
+/* Al entrar el footer, el logo termina de crecer y la foto se acomoda. */
+@supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+        .logo {
+            animation: crecer linear both;
+            animation-timeline: view();
+            animation-range: entry 0% cover 60%;
+        }
+
+        .foto {
+            animation: acomodar linear both;
+            animation-timeline: view();
+            animation-range: entry 0% cover 70%;
+        }
+    }
+}
+
+@keyframes crecer {
+    from {
+        transform: scale(0.86);
+    }
+
+    to {
+        transform: none;
+    }
+}
+
+@keyframes acomodar {
+    from {
+        transform: scale(1.14);
+    }
+
+    to {
+        transform: none;
+    }
+}
+
+@media (max-width: 719px) {
+    .footer {
+        min-height: 88svh;
+    }
+
+    .superior {
+        flex-direction: column;
+    }
+
+    .logo {
+        width: 100%;
+    }
+}

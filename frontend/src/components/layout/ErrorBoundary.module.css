@@ -1,0 +1,22 @@
+.pantalla {
+    display: grid;
+    align-content: center;
+    justify-items: start;
+    gap: 16px;
+    min-height: 100svh;
+    padding: var(--gutter);
+    max-width: 40rem;
+    margin: 0 auto;
+}
+
+.titulo {
+    font-size: var(--text-title);
+    font-style: italic;
+    font-weight: 900;
+    letter-spacing: var(--tracking-display);
+}
+
+.enlace {
+    font-family: var(--font-display);
+    font-weight: 700;
+}

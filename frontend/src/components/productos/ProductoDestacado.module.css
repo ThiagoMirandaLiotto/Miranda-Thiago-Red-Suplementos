@@ -1,0 +1,117 @@
+.destacado {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    background: var(--color-paper);
+}
+
+.placa {
+    display: block;
+    padding: 16px 16px 0;
+}
+
+.enlace {
+    text-decoration: underline transparent;
+    text-decoration-thickness: 0.08em;
+    text-underline-offset: 0.16em;
+    transition: text-decoration-color var(--duration-fast) ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .destacado:hover .enlace {
+        text-decoration-color: currentColor;
+    }
+}
+
+/* Como en el boceto: nombre, texto y compra juntos, sin un hueco entre el texto y el botón. */
+.texto {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 32px;
+    padding: 24px 16px 16px;
+}
+
+.nombre {
+    font-size: var(--text-title);
+    font-weight: 800;
+    line-height: 1.1;
+}
+
+.datos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 28px;
+    margin-top: 16px;
+}
+
+.datos dt {
+    font-size: var(--text-small);
+    color: var(--color-ink-muted);
+}
+
+.datos dd {
+    margin: 0;
+    font-weight: 600;
+}
+
+.descripcion {
+    max-width: 34ch;
+    margin-top: 32px;
+}
+
+.compra {
+    display: grid;
+    gap: 16px;
+}
+
+.precioFila {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 6px 20px;
+}
+
+.precio {
+    font-family: var(--font-display);
+    font-size: var(--text-title);
+    font-weight: 800;
+    line-height: 1;
+}
+
+.acciones {
+    display: grid;
+}
+
+.acciones > * {
+    min-height: 60px;
+}
+
+@media (min-width: 960px) {
+    .destacado {
+        grid-template-columns: 1fr 1fr;
+        min-height: min(88svh, 780px);
+    }
+
+    .placa {
+        display: grid;
+        place-items: center;
+        padding: 40px;
+    }
+
+    .inclinable {
+        width: 100%;
+        max-width: 620px;
+    }
+
+    .texto {
+        padding: 56px 48px 40px 16px;
+    }
+
+    .acciones {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .acciones > * {
+        min-height: 72px;
+    }
+}

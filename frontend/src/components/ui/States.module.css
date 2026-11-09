@@ -1,0 +1,46 @@
+.estado {
+    display: grid;
+    justify-items: start;
+    gap: 12px;
+    max-width: 52ch;
+    padding: clamp(32px, 5vw, 56px);
+    background: var(--color-paper);
+}
+
+:global(.on-field) .estado {
+    background: var(--color-field-raised);
+}
+
+.icono {
+    color: var(--color-ink);
+}
+
+.estado[data-tono="error"] .icono {
+    color: var(--color-danger);
+}
+
+:global(.on-field) .icono {
+    color: var(--color-ink-on-field);
+}
+
+:global(.on-field) .estado[data-tono="error"] .icono {
+    color: var(--color-danger-on-field);
+}
+
+.titulo {
+    font-size: var(--text-lead);
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.texto {
+    color: var(--color-ink-muted);
+}
+
+:global(.on-field) .texto {
+    color: var(--color-ink-on-field-muted);
+}
+
+.accion {
+    margin-top: 8px;
+}
