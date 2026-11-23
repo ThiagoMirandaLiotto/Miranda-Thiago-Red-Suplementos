@@ -1,0 +1,200 @@
+/* Panel: sin animaciones, solo cambios de tono (ver The Panel Quieto Rule en DESIGN.md). */
+.resumen {
+    color: var(--color-ink-muted);
+}
+
+.filtros {
+    display: grid;
+    gap: 16px;
+    padding: 16px;
+    background: var(--color-paper);
+}
+
+.busqueda :global(input) {
+    background: var(--color-ground);
+}
+
+.contenido {
+    margin-top: 16px;
+}
+
+.esqueleto {
+    display: grid;
+    gap: 2px;
+}
+
+.esqueletoFila {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 14px 16px;
+    background: var(--color-paper);
+}
+
+.esqueletoFila > :nth-child(2) {
+    flex: 1;
+}
+
+.tabla {
+    display: none;
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--color-paper);
+}
+
+.tabla th,
+.tabla td {
+    padding: 12px 14px;
+    text-align: left;
+    vertical-align: top;
+}
+
+.tabla thead th {
+    padding-top: 14px;
+    padding-bottom: 14px;
+    background: var(--color-sunk);
+    font-family: var(--font-display);
+    font-size: var(--text-small);
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.tabla tbody tr + tr {
+    border-top: 1px solid var(--color-sunk);
+}
+
+.tabla tbody th {
+    display: grid;
+    gap: 2px;
+    font-weight: 400;
+}
+
+.numero {
+    text-align: right !important;
+    white-space: nowrap;
+}
+
+.accion {
+    text-align: right !important;
+    white-space: nowrap;
+}
+
+.codigo {
+    font-family: var(--font-display);
+    font-weight: 800;
+    text-decoration: underline;
+    text-decoration-thickness: 0.08em;
+    text-underline-offset: 0.22em;
+    white-space: nowrap;
+}
+
+.cliente {
+    display: grid;
+    gap: 2px;
+    min-width: 0;
+}
+
+.nombre {
+    font-weight: 700;
+}
+
+.secundario {
+    font-size: var(--text-small);
+    color: var(--color-ink-muted);
+    overflow-wrap: anywhere;
+}
+
+.retiro {
+    display: grid;
+    justify-items: start;
+    gap: 4px;
+}
+
+.hoy {
+    font-weight: 700;
+}
+
+/* Hasta dos renglones: el detalle completo está en la pantalla del pedido. */
+.productos {
+    display: -webkit-box;
+    max-width: 34ch;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    font-size: var(--text-small);
+}
+
+.ver {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-family: var(--font-display);
+    font-size: var(--text-small);
+    font-weight: 700;
+}
+
+.accion :global(button) {
+    min-height: 44px;
+    padding: 0 14px;
+    font-size: var(--text-small);
+}
+
+.lista {
+    display: grid;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.tarjeta {
+    display: grid;
+    gap: 10px;
+    padding: 16px;
+    background: var(--color-paper);
+}
+
+.tarjetaArriba,
+.tarjetaAbajo {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px 16px;
+}
+
+.tarjetaAbajo strong {
+    font-family: var(--font-display);
+    font-size: var(--text-lead);
+    font-weight: 800;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .tabla tbody tr:hover {
+        background: var(--color-paper-hover);
+    }
+
+    .codigo:hover,
+    .ver:hover {
+        text-decoration-thickness: 0.14em;
+    }
+}
+
+/* Las seis vistas entran en una fila desde 860 px; la búsqueda va debajo, para no tapar «Todos». */
+.busqueda {
+    max-width: 420px;
+}
+
+.tabla .retiro > span:first-child {
+    white-space: nowrap;
+}
+
+@media (min-width: 860px) {
+    .tabla {
+        display: table;
+    }
+
+    .lista {
+        display: none;
+    }
+}

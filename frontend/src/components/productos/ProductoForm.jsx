@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router";
 import TextField from "../ui/TextField.jsx";
 import TextAreaField from "../ui/TextAreaField.jsx";
 import SelectField from "../ui/SelectField.jsx";
@@ -16,13 +17,17 @@ const MENSAJE_DUPLICADO = "Ya hay un producto activo con este nombre, marca, sab
 
 // Formulario de alta y edición. "guardar" recibe el payload listo para la API
 // y devuelve el producto guardado; "onGuardado" decide qué pasa después.
+// Al editar, el stock se muestra pero no se envía: se mueve con pedidos, ingresos y ajustes
+// ("enlaceStock" lleva a esa pantalla). Así una venta registrada mientras tanto no se pisa.
 export default function ProductoForm({
     valoresIniciales = VALORES_INICIALES,
     categorias,
     guardar,
     onGuardado,
     textoGuardar,
-    textoGuardando
+    textoGuardando,
+    stockEditable = true,
+    enlaceStock
 }) {
     const [valores, setValores] = useState(valoresIniciales);
     const [errores, setErrores] = useState({});
@@ -60,7 +65,7 @@ export default function ProductoForm({
 
         setEnviando(true);
         try {
-            const producto = await guardar(toProductoPayload(valores));
+            const producto = await guardar(toProductoPayload(valores, { conStock: stockEditable }));
             onGuardado(producto);
         } catch (error) {
             if (error.status === 409) {
@@ -119,7 +124,23 @@ export default function ProductoForm({
                     hint="En pesos. Para los decimales usá coma o punto, por ejemplo 25000,50."
                 />
                 <div className={styles.dupla}>
-                    <TextField label="Stock" required {...campo("stock")} inputMode="numeric" hint="Unidades disponibles." />
+                    {stockEditable ? (
+                        <TextField
+                            label="Stock inicial"
+                            required
+                            {...campo("stock")}
+                            inputMode="numeric"
+                            hint="Unidades que hay hoy. Queda en el historial como ingreso de mercadería."
+                        />
+                    ) : (
+                        <div className={styles.stockFijo}>
+                            <TextField label="Stock actual" value={valores.stock} disabled readOnly />
+                            <p className={styles.ayudaStock}>
+                                Cambia con los pedidos, los ingresos y los ajustes.{" "}
+                                <Link to={enlaceStock}>Cargar un ingreso o un ajuste</Link>
+                            </p>
+                        </div>
+                    )}
                     <TextField
                         label="Stock mínimo"
                         {...campo("stockMinimo")}

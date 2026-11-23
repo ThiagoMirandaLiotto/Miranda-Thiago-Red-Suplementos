@@ -12,21 +12,23 @@ export const VALORES_INICIALES = Object.freeze({
     descripcion: ""
 });
 
-// Body que acepta la API: exactamente los 9 campos editables, con sus tipos.
+// Body que acepta la API: los campos editables, con sus tipos.
 // Nunca incluye idProducto ni activo (la API responde 400 si llegan).
-export function toProductoPayload(valores) {
+// Al editar va sin "stock": la API conserva el actual (que mueven pedidos, ingresos y ajustes).
+export function toProductoPayload(valores, { conStock = true } = {}) {
     const stockMinimo = valores.stockMinimo.trim();
-    return {
+    const payload = {
         nombre: valores.nombre.trim(),
         marca: valores.marca.trim(),
         idCategoria: Number(valores.idCategoria),
         descripcion: valores.descripcion.trim(),
         precio: parsePrecio(valores.precio).valor,
-        stock: Number(valores.stock.trim()),
         stockMinimo: stockMinimo === "" ? 0 : Number(stockMinimo),
         sabor: valores.sabor.trim(),
         imagen: valores.imagen.trim()
     };
+    if (conStock) payload.stock = Number(valores.stock.trim());
+    return payload;
 }
 
 // Convierte un producto de la API en los textos que muestra el formulario.

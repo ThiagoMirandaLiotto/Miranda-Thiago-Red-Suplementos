@@ -16,11 +16,23 @@ function describirProducto({ nombre, marca, sabor, precio }) {
     return `${nombre}${detalles ? ` (${detalles})` : ""}, a ${formatPrecio(precio)}`;
 }
 
-export function mensajeConsulta(producto) {
+// Si quien escribe tiene cuenta, el mensaje incluye su email: el local registra el pedido a su nombre
+// y lo sigue desde «Mi cuenta» (con el 10 % si es socio verificado).
+function firmaCuenta(cuenta) {
+    return cuenta ? ` Tengo cuenta en la página con ${cuenta.email}.` : "";
+}
+
+export function mensajeConsulta(producto, cuenta = null) {
     if (producto.stock === 0) {
-        return `Hola, ${NEGOCIO.nombre}. ¿Cuándo vuelven a tener ${describirProducto(producto)}?`;
+        return `Hola, ${NEGOCIO.nombre}. ¿Cuándo vuelven a tener ${describirProducto(producto)}?${firmaCuenta(cuenta)}`;
     }
-    return `Hola, ${NEGOCIO.nombre}. Quiero comprar ${describirProducto(producto)}. ¿Lo puedo retirar en el local?`;
+    return `Hola, ${NEGOCIO.nombre}. Quiero comprar ${describirProducto(producto)}. ¿Lo puedo retirar en el local?${firmaCuenta(cuenta)}`;
+}
+
+// F-07: repetir una compra desde «Mi cuenta». El pedido nuevo lo registra el local, como siempre.
+export function mensajeRepetir(pedido, cuenta = null) {
+    const productos = pedido.detalles.map((detalle) => `${detalle.cantidad} × ${detalle.nombre}`).join(", ");
+    return `Hola, ${NEGOCIO.nombre}. Quiero repetir mi pedido ${pedido.codigo}: ${productos}. ¿Cuándo lo puedo retirar?${firmaCuenta(cuenta)}`;
 }
 
 // Devuelve false si el navegador no deja copiar (por ejemplo, en un contexto inseguro).

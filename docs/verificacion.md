@@ -1,5 +1,60 @@
 # Verificación de la entrega
 
+## Entrega 4: sistema completo
+
+Verificado el 23 de noviembre de 2026 sobre el código final, con Node.js 24.21.0 y Chrome sin ventana. No se probó una matriz de versiones ni de navegadores.
+
+### Resultados
+
+| Prueba | Resultado |
+|---|---|
+| `npm test` en `backend` | 101 de 101 (24 de la Entrega 2 adaptadas a la sesión, y 77 nuevas) |
+| `docs/solicitudes.http` ejecutado en orden contra una API recién iniciada | 47 de 47 devuelven el código documentado, cada error con su mensaje |
+| `npm run lint` y `npm run build` en `frontend` | Sin errores ni reglas desactivadas; compila |
+| Recorrido completo en el navegador (API con datos de demostración, Vite y Chrome) | 36 de 36, sin errores en la consola |
+| Desborde lateral en las 21 capturas del recorrido (escritorio y 390 px) | Ninguna pantalla se desborda |
+| axe, WCAG 2.2 A y AA | 0 violaciones en 24 revisiones: Ingresar, Crear cuenta, Mi cuenta, Pedidos, detalle del pedido, Nuevo pedido, Productos, Stock, edición, Clientes, Reportes y el diálogo de cancelación, a 1440 y 390 px |
+| Barra pública con el enlace nuevo, a 1440, 1100, 1024 y 900 px | Entra sin encimarse con «Escribinos» y sin desborde; en el teléfono, «Ingresar» aparece en el menú |
+| Detector de Impeccable sobre las pantallas y componentes nuevos | 0 hallazgos |
+| Lint de Taste sobre las páginas públicas nuevas | 0 FAIL y 0 WARN |
+| Medidor de Taste en Ingresar y Crear cuenta | 1 FAIL y 2 WARN en cada una: pide 4 fotos (hay 2), no hay video y hay movimiento moderado (10 y 9 elementos). Son pantallas de formulario: se justifica en el README |
+
+Las pruebas del backend cubren al menos un caso por funcionalidad (F-01 a F-08), regla de negocio (RN-01 a RN-10) y validación (V-01 a V-08). Usan un reloj fijo (martes 24/11/2026 a las 10:00) y lo adelantan para probar el vencimiento a las 48 h (RN-06) y el de la sesión a las 8 h.
+
+### Recorrido en el navegador
+
+| # | Punto | Resultado |
+|---|---|---|
+| 1 | Sin sesión, `/admin/pedidos` y `/mi-cuenta` llevan a Ingresar, y la barra ofrece «Ingresar» | Correcto |
+| 2 | Crear cuenta vacía marca los errores por campo. Con un email existente, el 409 de la API se muestra en el campo Email (RN-07) | Correcto |
+| 3 | Una cuenta nueva que se declara socia entra a Mi cuenta con «Membresía para verificar» | Correcto |
+| 4 | El dueño ingresa y ve la bandeja: «2 pendientes de preparar y 1 listo para retirar», 3 pedidos en curso, 11 en «Todos» y la búsqueda por cliente | Correcto |
+| 5 | Nuevo pedido: agregar suma unidades, «+» cambia la cantidad (PATCH) y pedir 99 muestra el error de stock de la API (RN-01) | Correcto |
+| 6 | Confirmar sin cliente ni franja marca los dos campos | Correcto |
+| 7 | Con la socia verificada, el carrito muestra el 10 % (RN-09). Al confirmar se abre RED-0012 con el descuento guardado | Correcto |
+| 8 | El stock de la creatina baja de 8 a 7 (F-06) | Correcto |
+| 9 | Cancelar sin motivo: el diálogo lo pide. Marcar listo cambia el estado | Correcto |
+| 10 | Stock: un ingreso de 5 lleva el stock a 12. Un ajuste sin motivo se rechaza en el campo | Correcto |
+| 11 | Clientes: verificar la membresía de la clienta nueva | Correcto |
+| 12 | Reportes: $ 180.460,45 vendidos en 30 días. El período de 7 días queda en la URL | Correcto |
+| 13 | La socia ve el RED-0012 «listo para retirar» en Mi cuenta. Si entra a `/admin` vuelve a Mi cuenta (RN-10). «Comprar» copia su email en el mensaje | Correcto |
+| 14 | En el teléfono, el cliente cancela su pedido pendiente (RN-04) y el stock de las barras vuelve de 32 a 34 (RN-05) | Correcto |
+| 15 | El dueño marca entregado el RED-0012 desde el teléfono | Correcto |
+
+### Problemas encontrados y corregidos
+
+- **Leyenda que tapaba las opciones:** en los controles segmentados con leyenda visible, la leyenda flotante quedaba encima de las opciones y se llevaba los clics. Las opciones ahora arrancan debajo (`clear: both`).
+- **Reportes en el teléfono:** la página se desbordaba de costado. La tabla de cancelados ahora se desplaza dentro de su caja, y el eje del gráfico escribe menos fechas según su propio ancho (container query).
+- **Label in Name (WCAG 2.5.3):** «Repetir por Instagram», «Verificar membresía» y «Quitar membresía» tenían un nombre accesible que no contenía el texto visible. Ahora empieza con ese texto.
+- **Bandeja de pedidos:** con la búsqueda al costado, la vista «Todos» quedaba oculta. La búsqueda pasó debajo de las vistas.
+- **Otros detalles visuales:** el control de cantidad del carrito se estiraba; los campos de contraseña de Crear cuenta quedaban desalineados; decía «1 vencidos».
+
+### Lo que no se verificó
+
+- **Dispositivos y navegadores:** no se probó en un teléfono real ni en Firefox o Safari.
+- **Concurrencia:** dos administradores a la vez sobre el mismo producto. Node procesa cada solicitud de punta a punta sin intercalarlas y el pedido vuelve a controlar el stock al confirmar, pero no hay una prueba de carga.
+- **Vencimiento automático por tiempo real:** a las 48 h se probó con el reloj de las pruebas. El temporizador de `server.js` (cada minuto) no se observó durante dos días reales.
+
 ## Entrega 3: frontend
 
 Verificado el 7 de noviembre de 2026 sobre el código final, con Node.js 24.21.0 y Chrome 155 sin ventana. No se ejecutó una matriz de versiones ni de navegadores.

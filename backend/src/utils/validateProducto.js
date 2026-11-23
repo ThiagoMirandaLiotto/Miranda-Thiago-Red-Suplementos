@@ -4,7 +4,9 @@ import { Messages } from "../enums/Messages.js";
 const allowedFields = ["nombre", "marca", "idCategoria", "descripcion", "precio",
     "stock", "stockMinimo", "sabor", "imagen"];
 
-export default function validateProducto(data) {
+// Al modificar, el stock puede omitirse: desde la Entrega 4 se mueve con ingresos, ajustes y pedidos,
+// y el formulario de edición no lo envía para no pisar una venta registrada mientras estaba abierto.
+export default function validateProducto(data, { stockOpcional = false } = {}) {
     if (!data || typeof data !== "object" || Array.isArray(data)) {
         throw new BadRequestError(Messages.INVALID_DATA);
     }
@@ -23,7 +25,8 @@ export default function validateProducto(data) {
         || Number(data.precio.toFixed(2)) !== data.precio) {
         throw new BadRequestError(Messages.INVALID_PRICE);
     }
-    if (!Number.isSafeInteger(data.stock) || data.stock < 0) {
+    const sinStock = stockOpcional && data.stock === undefined;
+    if (!sinStock && (!Number.isSafeInteger(data.stock) || data.stock < 0)) {
         throw new BadRequestError(Messages.INVALID_STOCK);
     }
     if (data.stockMinimo !== undefined

@@ -1,61 +1,105 @@
-# Arquitectura de la Entrega 2
+# Arquitectura del backend
 
-## Dominio y elección de la entidad
+La API se armó en la Entrega 2 con un CRUD de Producto, y en la Entrega 4 suma la lógica de negocio completa del análisis del sistema. Mantiene las mismas capas y el mismo formato de respuesta.
 
-RED SUPLEMENTOS necesita organizar el catálogo y evitar inconsistencias de inventario. Aunque Pedido es la entidad central del flujo de ventas, el análisis del sistema identifica expresamente Producto como el CRUD principal. Por eso esta entrega implementa Producto y consulta Categoria como relación auxiliar.
+## Capas
 
-El modelo de Producto conserva los atributos del diagrama de clases: idProducto, nombre, marca, idCategoria, descripcion, precio, stock, stockMinimo, sabor, imagen y activo. La categoría se representa mediante su ID; cada producto pertenece a una categoría.
+| Capa | Qué hace | Qué no hace |
+| --- | --- | --- |
+| `routes` | Asocia cada método y ruta con sus middlewares y su controlador. Responde 405 a los métodos no admitidos. | No lee el cuerpo ni decide reglas. |
+| `middlewares` | `authenticate` exige una sesión vigente (401), `authorize` limita por perfil (403) y `requireJson` exige JSON (415). `errorHandler` arma todas las respuestas de error. | No conoce pedidos ni productos. |
+| `controllers` | Toma los parámetros (con `parseId` para los IDs), llama al servicio y responde con `ApiResponse`. | No valida reglas ni guarda datos. No usa try/catch: Express 5 lleva los errores al `errorHandler`. |
+| `services` | Toda la lógica: validaciones, reglas de negocio, estados, stock, descuentos y reportes. Lanzan `AppError` con el mensaje de `Messages`. | No usan objetos de Express. |
+| `repositories` | Guardan y leen los arrays en memoria. Asignan IDs y el código del pedido. Devuelven copias, para que nadie cambie los datos sin pasar por un servicio. | No deciden si algo se puede vender. |
+| `models` | Las entidades del dominio (las clases de la Entrega 1) con consultas simples sobre su propio estado: `hayStock`, `requiereReposicion`, `tieneDescuento`, `vencimiento`. | No acceden a otras entidades. |
+| `utils` | Validan la forma de cada cuerpo (`validate*.js`), manejan fechas, importes en centavos, contraseñas y el reloj. | No acceden a los repositorios. |
 
-## Recorrido de una solicitud
+Las instancias se crean una sola vez en `createApp()` y se pasan por constructor. Esa función recibe el reloj (para fijar la hora en las pruebas) y la cuenta del dueño.
 
-Una solicitud POST entra por `productoRoutes`. El middleware `requireJson` controla el tipo de contenido. `ProductoController.create` toma `req.body` e invoca a `ProductoService.create`. El servicio valida los atributos, comprueba la categoría y descarta duplicados. `ProductoRepository.create` asigna un ID y agrega una instancia de Producto al array. El controlador devuelve HTTP 201 mediante `ApiResponse.success`.
+## Recorrido de una solicitud: confirmar un pedido
 
-Si alguna validación falla, se lanza un error que hereda de `AppError`. El middleware final `errorHandler` convierte ese error en una respuesta JSON uniforme. Los controladores no repiten bloques try/catch: Express captura los errores síncronos; la versión utilizada también maneja rechazos de promesas devueltas por handlers.
+`POST /api/pedidos` con `{ idCliente: 3, fechaRetiro: "2026-11-25", horaRetiro: "18:00" }`:
 
-## Separación de responsabilidades
+1. **`pedidoRoutes`:** el router aplica `authenticate`, que lee `Authorization: Bearer <token>`, busca la sesión y deja el usuario en `req.usuario`. Después aplica `authorize(ADMINISTRADOR)` y `requireJson`.
+2. **`PedidoController.create`:** llama a `pedidoService.create(req.usuario, req.body)`, pone el encabezado `Location` y responde 201 con `ApiResponse.success`.
+3. **`PedidoService.create`:**
+   - vence los pedidos atrasados (RN-06);
+   - valida el cuerpo con `validatePedido`: un cliente registrado o uno sin cuenta, y fecha y franja dentro de las reglas RN-03 y V-06;
+   - controla que el carrito no esté vacío (V-08) y que el cliente exista;
+   - **vuelve a controlar el stock de cada línea**, porque pudo cambiar desde que se armó el carrito (RN-01). Hasta acá no se modificó nada: si algo falla, responde 409 y el pedido no existe.
+4. **Importes:** se copian nombre y precio de cada producto a las líneas (`DetallePedido`). Se suman en centavos y se aplica el 10 % solo si `Cliente.tieneDescuento()` (RN-09).
+5. **`PedidoRepository.create`:** asigna el ID y el código único `RED-0001`, y guarda el historial con el primer estado: pendiente, quién y cuándo.
+6. **`StockService.registerMovement`:** por cada línea registra una `VENTA` con cantidad negativa, el stock resultante, el usuario y el pedido. Si un producto queda bajo el mínimo, la respuesta lo incluye en `alertasStock` (F-06).
+7. **Cierre:** se vacía el carrito del administrador y se responde `{ success: true, data: { pedido, alertasStock } }`.
 
-Los servicios no usan objetos de Express. Los repositorios no deciden si un producto puede venderse, ni construyen respuestas HTTP: únicamente gestionan registros. Las utilidades validan formas y valores; el servicio decide qué reglas aplicar. Los modelos representan el dominio y contienen consultas simples de estado (`hayStock` y `stockCritico`).
+Si en cualquier paso se lanza un `AppError`, el `errorHandler` responde `{ success: false, message }` con su código: 400, 401, 403, 404 o 409.
 
-Los métodos de persistencia y HTTP que aparecían en el modelo conceptual se distribuyen entre capas: crear/editar producto corresponde al servicio y al repositorio, y enviar su resultado corresponde al controlador. No se implementan métodos vacíos para funcionalidades futuras.
+## Estados del pedido
 
-La instancia del repositorio se crea una vez por aplicación y se comparte mediante los constructores. No se recrea por solicitud. Cada repositorio mantiene un array privado y entrega copias de sus entidades, por lo que un consumidor no modifica accidentalmente el almacenamiento.
+```text
+PENDIENTE ──▶ LISTO_PARA_RETIRAR ──▶ ENTREGADO
+    │                 │
+    └─────────────────┴──▶ CANCELADO (con motivo; devuelve el stock)
+    └─────────────────┴──▶ VENCIDO   (48 h después de la franja; devuelve el stock)
+```
+
+Quién puede hacer cada cambio, en `PedidoService.changeStatus`:
+
+- **El administrador:**
+  - marca listo un pedido pendiente;
+  - marca entregado uno que ya está listo (si no, responde 409 «Primero marcá el pedido como listo para retirar»);
+  - cancela cualquiera que esté en curso, con un motivo de al menos 5 caracteres.
+- **El cliente:** solo cancela, y solo mientras el pedido está pendiente (RN-04). Si pide otro estado responde 403; si ya está listo, 409.
+- **El sistema:** pasa a vencido lo que nadie retiró.
+- **Pedido cerrado:** entregado, cancelado o vencido no admite cambios (409).
+
+Cada cambio se agrega al `historial` del pedido con el estado, la fecha, el usuario (o «Sistema») y la nota. Es la relación Administrador → Pedido gestionado del Anexo B.
+
+## Stock
+
+El stock nunca se escribe directo: todo pasa por `StockService.registerMovement`, que rechaza un resultado negativo (409) y deja un `MovimientoStock`.
+
+| Tipo | Lo genera | Cantidad |
+| --- | --- | --- |
+| `INGRESO` | El alta de un producto («Stock inicial») o el panel («Ingreso de mercadería») | Positiva |
+| `AJUSTE` | El panel, con motivo obligatorio, o un `PUT` de producto que trae otro stock | Positiva o negativa |
+| `VENTA` | La confirmación de un pedido | Negativa |
+| `DEVOLUCION` | La cancelación o el vencimiento de un pedido | Positiva |
+
+## Sesión y permisos
+
+- **Registro:** crea siempre un `Cliente`. La única cuenta de administrador se crea al iniciar la API (`data/cuentaAdministrador.js`).
+- **Contraseñas:** se guardan con `scrypt` y sal aleatoria. Se comparan en tiempo constante, y con un email inexistente también se calcula un hash, para no revelar qué cuentas existen. `Usuario.toJSON()` nunca incluye el hash.
+- **Sesiones:** cada inicio de sesión genera un token aleatorio de 32 bytes que vence a las 8 horas, guardado en `SesionRepository`. El cierre de sesión lo borra.
+- **Pedidos ajenos:** un cliente que pide el pedido de otra persona recibe 404, no 403, para no confirmar que existe.
+
+## Tiempo
+
+`utils/reloj.js` es la única fuente de la hora actual de los servicios:
+
+- **En producción** devuelve la hora real.
+- **En las pruebas** se fija en una fecha conocida y se adelanta, por ejemplo 48 h para el vencimiento o 8 h para la sesión.
+- **Los datos de demostración** lo fijan en días anteriores y cargan los pedidos con los mismos servicios que usa la API. Así cumplen todas las reglas y dejan historia para los reportes.
+
+Las fechas de retiro se guardan como `AAAA-MM-DD` y la franja como `HH:00`, en la hora local del servidor (el local está en Buenos Aires).
 
 ## Decisiones de alcance
 
-1. Se utiliza JavaScript con módulos ES y Express porque la consigna presenta ejemplos con `export` y una API HTTP. No se adjuntó un repositorio de código para conservar un framework anterior.
-2. El CRUD comienza sin productos. Las cinco categorías del análisis se precargan como datos de referencia, también en un array.
-3. La eliminación siempre es lógica: evita borrar referencias históricas cuando se implemente Pedido y sigue F-02. El listado y la consulta por ID exponen solo productos activos.
-4. PUT reemplaza todos los atributos editables. Los opcionales omitidos se restablecen a sus valores por defecto.
-5. La unicidad por nombre, marca, sabor y categoría es una decisión adicional de esta implementación. El diagrama no define SKU ni una clave única de Producto.
-6. El precio sigue el tipo numérico solicitado y se limita a dos decimales. Esta entrega no calcula totales ni descuentos; cuando se implemente Pedido deberá definirse su aritmética monetaria.
-7. La API local no implementa autenticación ni pretende satisfacer todavía RN-10. El stock es una cantidad editable, sin el módulo de movimientos, reservas o ventas.
-8. Se entrega la API y su documentación; la landing del mockup no se implementa en esta etapa.
+1. **Pedidos registrados por el dueño.** Los clientes piden por Instagram (decisión del negocio). El carrito es del administrador y uno por usuario. El pedido puede ser de un cliente registrado (`idCliente`) o de alguien sin cuenta (nombre e Instagram o teléfono).
+2. **Persistencia en memoria**, como en la Entrega 2. Reemplazar un repositorio por una base de datos no cambia los servicios.
+3. **Baja lógica (RN-08).** El listado y la consulta por ID muestran solo productos activos. Un producto dado de baja sigue en los pedidos que lo incluyeron.
+4. **`PUT` de producto.** Reemplaza los atributos editables. El `stock` pasó a ser opcional: sin él se conserva el actual, y si llega distinto la diferencia queda como `AJUSTE`.
+5. **Unicidad.** Nombre, marca, sabor y categoría, para productos activos (Entrega 2). Email, sin distinguir mayúsculas, para cuentas (RN-07).
+6. **Reportes.** Una venta es un pedido entregado (se paga al retirar). Se agrupa por día de entrega, y «más vendidos» suma unidades entregadas a precio de lista.
 
 ## Correspondencia con la evaluación
 
-| Requisito | Evidencia en el proyecto |
+| Criterio | Evidencia |
 | --- | --- |
-| Diez carpetas solicitadas | backend/src contiene todas y cada una tiene código funcional. |
-| Una responsabilidad por capa | Routes, controllers, services, repositories y models separados. |
-| Obtener todos | GET /api/productos. |
-| Obtener por ID | GET /api/productos/:id. |
-| Crear | POST /api/productos. |
-| Modificar | PUT /api/productos/:id. |
-| Eliminar | DELETE /api/productos/:id, mediante activo=false. |
-| Persistencia en arrays | #productos y #categorias en sus repositorios. |
-| Enum de mensajes | enums/Messages.js con Object.freeze. |
-| AppError | exceptions/AppError.js y sus subclases. |
-| Errores centralizados | middlewares/errorHandler.js. |
-| Respuestas consistentes | responses/ApiResponse.js. |
-| Verificación funcional | backend/test/productos.test.js. |
-
-## Documentos de referencia revisados
-
-- **Analisis del Sistema RED SUPLEMENTOS 1.docx:** F-02, V-01, V-05, RN-08, Anexo A y relación Categoria → Producto del Anexo B.
-- **Diagrama de Clases RED SUPLEMENTOS.dc.html:** atributos de Producto y Categoria, y contexto de las demás entidades.
-- **ModeloBorrador.png:** esquema general Usuario, Pedido, Producto, Categoria y Movimiento stock.
-- **Wireframe Combinada RED SUPLEMENTOS.pdf:** navegación y estructura de la landing futura.
-- **Mockup RED SUPLEMENTOS.pdf:** catálogo y presentación visual del negocio.
-- **Propuesta de Diseño Web - RED SUPLEMENTOS.docx:** contexto comercial y dirección visual.
-
-El análisis describe una plataforma de pedidos más amplia que la landing orientada a WhatsApp. Para el alcance funcional del backend se prioriza el análisis y el diagrama de clases; la propuesta, el wireframe y el mockup se toman como referencias del frontend.
+| Lógica de negocio implementada correctamente | `services/`: Auth, Cliente, Producto, Stock, Carrito, Pedido y Reporte, con las reglas RN-01 a RN-10 |
+| Separación de capas MVC | Cada recurso tiene su ruta, su controlador, su servicio y su repositorio. La tabla de arriba dice qué hace cada capa y qué no |
+| Validaciones en el backend | `utils/validate*.js` (forma y formato) y los servicios (stock, duplicados, inexistentes, estados). Una prueba por validación |
+| Manejo centralizado de errores | `AppError` y sus subclases, `Messages` y un único `errorHandler` |
+| Formato de respuesta consistente | `ApiResponse`. Las pruebas verifican las claves exactas de cada respuesta (`data`/`success` o `message`/`success`) |
+| Integración con el frontend | Cada endpoint tiene su función en `frontend/src/services` y su pantalla (README, sección Frontend) |
+| Funcionamiento general | `npm test`: 101 pruebas aprobadas. El recorrido en el navegador está en `docs/verificacion.md` |

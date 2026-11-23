@@ -1,4 +1,4 @@
-import { Pencil, Trash2 } from "lucide-react";
+import { Boxes, Pencil, Trash2 } from "lucide-react";
 import ProductoImagen from "./ProductoImagen.jsx";
 import StockBadge from "./StockBadge.jsx";
 import Button from "../ui/Button.jsx";
@@ -9,6 +9,14 @@ import styles from "./ProductoTabla.module.css";
 function Acciones({ producto, onDarDeBaja }) {
     return (
         <div className={styles.acciones}>
+            <Button
+                to={`/admin/productos/${producto.idProducto}/stock`}
+                variant="tonal"
+                icon={<Boxes size={16} aria-hidden="true" />}
+                aria-label={`Stock y movimientos de ${producto.nombre}`}
+            >
+                Stock
+            </Button>
             <Button
                 to={`/admin/productos/${producto.idProducto}/editar`}
                 variant="tonal"

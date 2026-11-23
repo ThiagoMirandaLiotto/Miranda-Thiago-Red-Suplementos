@@ -1,0 +1,90 @@
+.bajada {
+    max-width: 70ch;
+    color: var(--color-ink-muted);
+}
+
+.saltar {
+    justify-self: start;
+    font-family: var(--font-display);
+    font-weight: 700;
+}
+
+.grilla {
+    display: grid;
+    gap: 16px;
+}
+
+.formulario {
+    display: grid;
+    align-content: start;
+    gap: 16px;
+    padding: 24px;
+    background: var(--color-paper);
+    scroll-margin-top: 128px;
+}
+
+.grupo {
+    display: grid;
+    gap: 16px;
+    min-width: 0;
+    margin: 0;
+    padding: 16px 0 0;
+    border: 0;
+    border-top: 2px solid var(--color-ink);
+}
+
+.grupo :global(input),
+.grupo :global(select) {
+    background: var(--color-ground);
+}
+
+.leyenda {
+    float: left;
+    width: 100%;
+    padding: 0;
+    font-family: var(--font-display);
+    font-size: var(--text-body);
+    font-weight: 800;
+}
+
+.dupla {
+    display: grid;
+    gap: 16px;
+}
+
+.nota {
+    font-size: var(--text-small);
+    color: var(--color-ink-muted);
+}
+
+.error {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    font-size: var(--text-small);
+    font-weight: 600;
+    color: var(--color-danger);
+}
+
+.error svg {
+    flex: none;
+    margin-top: 2px;
+}
+
+@media (min-width: 560px) {
+    .dupla {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* En pantallas anchas el carrito queda al lado de la lista y el atajo ya no hace falta. */
+@media (min-width: 1100px) {
+    .saltar {
+        display: none;
+    }
+
+    .grilla {
+        grid-template-columns: minmax(0, 1.25fr) minmax(380px, 1fr);
+        align-items: start;
+    }
+}

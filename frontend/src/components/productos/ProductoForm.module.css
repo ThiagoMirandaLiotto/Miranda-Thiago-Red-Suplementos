@@ -45,6 +45,22 @@
     width: 120px;
 }
 
+.stockFijo {
+    display: grid;
+    align-content: start;
+    gap: 6px;
+}
+
+.ayudaStock {
+    font-size: var(--text-small);
+    color: var(--color-ink-muted);
+}
+
+.ayudaStock a {
+    font-weight: 700;
+    color: var(--color-ink);
+}
+
 .acciones {
     display: flex;
     flex-wrap: wrap;

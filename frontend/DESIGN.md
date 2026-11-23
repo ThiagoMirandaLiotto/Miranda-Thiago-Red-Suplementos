@@ -291,9 +291,9 @@ El sistema es plano. La profundidad sale de los cambios de campo, de los escalon
 
 ### Navigation
 
-- **Sitio público:** barra negra siempre fija, con el logo compacto a la izquierda, cuatro links (Montserrat 600) y «Escribinos» en naranja. Es transparente con un velo sobre el hero. El link actual lleva una barra a 7°. Al señalar un link, un bloque claro a 7° lo barre, el texto pasa a negro y rueda.
+- **Sitio público:** barra negra siempre fija, con el logo compacto a la izquierda, cinco links (Montserrat 600; el último es el de la cuenta: «Ingresar», «Mi cuenta» o «Panel») y «Escribinos» en naranja. Es transparente con un velo sobre el hero. El link actual lleva una barra a 7°. Al señalar un link, un bloque claro a 7° lo barre, el texto pasa a negro y rueda.
 - **Teléfono:** la palabra «Menú» abre una pantalla completa con los links en tipografía de título, que entran uno tras otro. Se cierra con Esc.
-- **Panel:** barra negra con el logo en negativo, «Productos» y «Ver tienda».
+- **Panel:** barra negra con el logo en negativo, las secciones «Pedidos», «Productos», «Clientes» y «Reportes» (la actual, subrayada), y «Ver tienda» y «Salir». En el teléfono, las secciones bajan a una segunda fila que se desplaza de costado.
 
 ### Barra de compra
 

@@ -22,4 +22,9 @@ export default class Producto {
     stockCritico() {
         return this.stock < this.stockMinimo;
     }
+
+    // Alerta de F-06: sin stock o por debajo del mínimo definido.
+    requiereReposicion() {
+        return this.stock === 0 || this.stockCritico();
+    }
 }

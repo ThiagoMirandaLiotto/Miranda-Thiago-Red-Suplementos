@@ -1,7 +1,7 @@
 {
     "name": "red-suplementos-frontend",
     "version": "1.0.0",
-    "description": "Entrega 3: sitio público y panel de productos de RED SUPLEMENTOS",
+    "description": "Frontend de RED SUPLEMENTOS: sitio público, cuentas de cliente y panel del local",
     "private": true,
     "type": "module",
     "scripts": {

@@ -11,6 +11,16 @@ export class BadRequestError extends AppError {
     constructor(message) { super(message, 400); }
 }
 
+// Falta la sesión o venció.
+export class UnauthorizedError extends AppError {
+    constructor(message) { super(message, 401); }
+}
+
+// Hay sesión, pero el perfil no tiene permiso para la acción.
+export class ForbiddenError extends AppError {
+    constructor(message) { super(message, 403); }
+}
+
 export class NotFoundError extends AppError {
     constructor(message) { super(message, 404); }
 }

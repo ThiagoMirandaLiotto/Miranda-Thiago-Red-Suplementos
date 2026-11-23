@@ -23,6 +23,14 @@
     gap: 16px;
 }
 
+.tituloConEstado {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 16px;
+    min-width: 0;
+}
+
 .titulo {
     font-size: var(--text-title);
     font-weight: 800;

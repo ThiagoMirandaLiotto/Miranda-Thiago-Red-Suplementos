@@ -15,7 +15,8 @@ const ENLACES = [
     { etiqueta: "Inicio", destino: "/" },
     { etiqueta: "Nosotros", destino: "/#nosotros" },
     { etiqueta: "Productos", destino: "/catalogo" },
-    { etiqueta: "Administrar productos", destino: "/admin/productos" }
+    { etiqueta: "Mi cuenta", destino: "/mi-cuenta" },
+    { etiqueta: "Panel del local", destino: "/admin" }
 ];
 
 export default function Footer() {

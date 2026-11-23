@@ -1,0 +1,40 @@
+.historial {
+    display: grid;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* La línea vertical une los cambios en orden; el primero no la lleva arriba. */
+.cambio {
+    position: relative;
+    display: grid;
+    gap: 2px;
+    padding: 0 0 16px 20px;
+    border-left: 2px solid var(--color-sunk);
+}
+
+.cambio:last-child {
+    padding-bottom: 0;
+    border-left-color: transparent;
+}
+
+.cambio::before {
+    content: "";
+    position: absolute;
+    top: 6px;
+    left: -6px;
+    width: 10px;
+    height: 10px;
+    background: var(--color-ink);
+}
+
+.detalle {
+    font-size: var(--text-small);
+    color: var(--color-ink-muted);
+}
+
+.nota {
+    font-size: var(--text-small);
+}

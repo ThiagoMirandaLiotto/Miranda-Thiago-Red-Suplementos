@@ -1,0 +1,58 @@
+.pasos {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 4px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* Cada paso es una franja: completa en negro, la actual con borde y la que falta en gris. */
+.paso {
+    display: grid;
+    align-content: start;
+    gap: 8px;
+    padding-top: 10px;
+    border-top: 4px solid var(--color-sunk);
+}
+
+.paso[data-estado="hecho"],
+.paso[data-estado="actual"] {
+    border-top-color: var(--color-ink);
+}
+
+.marca {
+    display: inline-grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border: 2px solid var(--color-sunk);
+    font-family: var(--font-display);
+    font-size: var(--text-small);
+    font-weight: 800;
+    color: var(--color-ink-muted);
+}
+
+.paso[data-estado="hecho"] .marca {
+    border-color: var(--color-ink);
+    background: var(--color-ink);
+    color: var(--color-ground);
+}
+
+.paso[data-estado="actual"] .marca {
+    border-color: var(--color-ink);
+    color: var(--color-ink);
+}
+
+.texto {
+    font-family: var(--font-display);
+    font-size: var(--text-small);
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--color-ink-muted);
+}
+
+.paso[data-estado="hecho"] .texto,
+.paso[data-estado="actual"] .texto {
+    color: var(--color-ink);
+}

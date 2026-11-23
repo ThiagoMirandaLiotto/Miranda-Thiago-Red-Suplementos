@@ -1,0 +1,137 @@
+.carrito {
+    display: grid;
+    gap: 14px;
+}
+
+.carrito:focus {
+    outline: none;
+}
+
+.cabecera {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.titulo {
+    font-size: var(--text-body);
+    font-weight: 800;
+}
+
+.cuenta {
+    font-weight: 600;
+    color: var(--color-ink-muted);
+}
+
+.vacio {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px;
+    background: var(--color-ground);
+    color: var(--color-ink-muted);
+}
+
+.vacio svg {
+    flex: none;
+    color: var(--color-ink);
+}
+
+.lista {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.item {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    grid-template-areas:
+        "datos datos quitar"
+        "cantidad subtotal subtotal";
+    align-items: center;
+    gap: 10px 12px;
+    padding: 12px 0;
+}
+
+.item + .item {
+    border-top: 1px solid var(--color-sunk);
+}
+
+.datos {
+    display: grid;
+    grid-area: datos;
+    gap: 2px;
+    min-width: 0;
+}
+
+.nombre {
+    font-weight: 700;
+}
+
+.extra {
+    font-size: var(--text-small);
+    color: var(--color-ink-muted);
+}
+
+.problema {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    margin-top: 4px;
+    font-size: var(--text-small);
+    font-weight: 600;
+    color: var(--color-danger);
+}
+
+.problema svg {
+    flex: none;
+    margin-top: 2px;
+}
+
+.item > :global([role="group"]) {
+    grid-area: cantidad;
+    justify-self: start;
+}
+
+.subtotal {
+    grid-area: subtotal;
+    justify-self: end;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.quitar {
+    display: grid;
+    grid-area: quitar;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border: 0;
+    background: transparent;
+    color: var(--color-ink-muted);
+    transition: background-color var(--duration-fast) ease, color var(--duration-fast) ease, transform var(--duration-press) var(--ease-out);
+}
+
+.quitar:active:not(:disabled) {
+    transform: scale(0.94);
+}
+
+.quitar:disabled {
+    cursor: not-allowed;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .quitar:hover:not(:disabled) {
+        background: var(--color-danger-tint);
+        color: var(--color-danger);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .quitar:active:not(:disabled) {
+        transform: none;
+    }
+}

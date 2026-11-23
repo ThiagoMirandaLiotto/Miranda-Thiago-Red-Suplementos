@@ -1,0 +1,10 @@
+.verificando {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    min-height: 60svh;
+    padding: calc(var(--nav-height) + 32px) var(--gutter) 32px;
+    font-family: var(--font-display);
+    font-weight: 700;
+}

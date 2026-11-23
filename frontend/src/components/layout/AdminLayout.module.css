@@ -3,16 +3,17 @@
     top: 0;
     z-index: 40;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    gap: 16px;
-    height: 64px;
+    gap: 0 20px;
     padding: 0 var(--gutter);
     background: var(--color-field);
 }
 
 .marca {
-    display: block;
-    padding: 4px 0;
+    display: flex;
+    align-items: center;
+    min-height: 64px;
 }
 
 .logo {
@@ -20,26 +21,60 @@
     height: 32px;
 }
 
+/* Teléfono: las secciones bajan a una segunda fila y, si no entran, se desplazan de costado. */
+.secciones {
+    display: flex;
+    order: 3;
+    gap: 4px;
+    width: calc(100% + 2 * var(--gutter));
+    margin: 0 calc(var(--gutter) * -1);
+    padding: 0 var(--gutter);
+    overflow-x: auto;
+    border-top: 1px solid var(--color-field-border);
+    scrollbar-width: none;
+}
+
+.secciones::-webkit-scrollbar {
+    display: none;
+}
+
 .seccion {
-    padding: 4px 10px;
-    background: var(--color-field-raised);
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    min-height: 48px;
+    padding: 0 10px;
+    border-bottom: 3px solid transparent;
     font-family: var(--font-display);
     font-size: var(--text-small);
     font-weight: 700;
     color: var(--color-ink-on-field-muted);
+    text-decoration: none;
+    transition: color var(--duration-fast) ease, border-color var(--duration-fast) ease;
 }
 
-.nav {
+.seccion[aria-current="page"] {
+    border-bottom-color: var(--color-ink-on-field);
+    color: var(--color-ink-on-field);
+}
+
+.cuenta {
     display: flex;
-    gap: 20px;
+    gap: 18px;
     margin-left: auto;
 }
 
 .link {
     display: inline-flex;
     align-items: center;
-    gap: 4px;
+    gap: 6px;
+    min-width: 44px;
     min-height: 44px;
+    justify-content: center;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
     font-family: var(--font-display);
     font-size: var(--text-body);
     font-weight: 600;
@@ -47,20 +82,8 @@
     white-space: nowrap;
 }
 
-@media (max-width: 399px) {
-    .nav {
-        gap: 14px;
-    }
-
-    .link {
-        font-size: var(--text-small);
-    }
-}
-
-.link[aria-current="page"] {
-    text-decoration: underline;
-    text-decoration-thickness: 2px;
-    text-underline-offset: 6px;
+.textoAncho {
+    display: none;
 }
 
 .main {
@@ -74,16 +97,43 @@
     outline: none;
 }
 
+@media (min-width: 520px) {
+    .textoAncho {
+        display: inline;
+    }
+}
+
+/* Desde 900 px todo entra en una fila: logo, secciones y cuenta. */
+@media (min-width: 900px) {
+    .barra {
+        flex-wrap: nowrap;
+        gap: 32px;
+    }
+
+    .secciones {
+        order: 0;
+        width: auto;
+        margin: 0;
+        padding: 0;
+        border-top: 0;
+        overflow: visible;
+    }
+
+    .seccion {
+        min-height: 64px;
+        padding: 0 12px;
+        font-size: var(--text-body);
+    }
+}
+
 @media (hover: hover) and (pointer: fine) {
+    .seccion:hover {
+        color: var(--color-ink-on-field);
+    }
+
     .link:hover {
         text-decoration: underline;
         text-decoration-thickness: 2px;
         text-underline-offset: 6px;
-    }
-}
-
-@media (max-width: 479px) {
-    .seccion {
-        display: none;
     }
 }

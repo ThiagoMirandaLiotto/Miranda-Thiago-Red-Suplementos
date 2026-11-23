@@ -5,6 +5,8 @@ import { Messages } from "../enums/Messages.js";
 export default function errorHandler(error, req, res, next) {
     if (res.headersSent) return next(error);
     if (error instanceof AppError) {
+        // 401: indica cómo autenticarse (token en el encabezado Authorization).
+        if (error.statusCode === 401) res.set("WWW-Authenticate", "Bearer");
         return ApiResponse.error(res, error.message, error.statusCode);
     }
     if (error.type === "entity.parse.failed") {

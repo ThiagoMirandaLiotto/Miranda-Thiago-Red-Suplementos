@@ -1,0 +1,63 @@
+.tabla {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tabla th,
+.tabla td {
+    padding: 10px 0;
+    text-align: left;
+    vertical-align: top;
+}
+
+.tabla th + th,
+.tabla td,
+.tabla th + td {
+    padding-left: 16px;
+}
+
+.tabla thead th {
+    padding-top: 0;
+    border-bottom: 2px solid var(--color-ink);
+    font-family: var(--font-display);
+    font-size: var(--text-small);
+    font-weight: 700;
+}
+
+.tabla tbody tr + tr {
+    border-top: 1px solid var(--color-sunk);
+}
+
+.tabla tbody th {
+    display: grid;
+    gap: 2px;
+    font-weight: 400;
+}
+
+.nombre {
+    font-weight: 700;
+}
+
+.extra {
+    font-size: var(--text-small);
+    color: var(--color-ink-muted);
+}
+
+.numero {
+    text-align: right !important;
+    white-space: nowrap;
+}
+
+.unitario {
+    display: none;
+}
+
+@media (min-width: 640px) {
+    .unitario {
+        display: table-cell;
+    }
+
+    .unitarioMovil {
+        display: none;
+    }
+}

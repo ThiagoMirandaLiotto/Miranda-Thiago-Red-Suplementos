@@ -56,6 +56,8 @@ function EditarProducto({ id }) {
                 onGuardado={alGuardar}
                 textoGuardar="Guardar cambios"
                 textoGuardando="Guardando…"
+                stockEditable={false}
+                enlaceStock={`/admin/productos/${id}/stock`}
             />
         );
     }

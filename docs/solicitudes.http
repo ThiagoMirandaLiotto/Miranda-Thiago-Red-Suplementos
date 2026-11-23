@@ -1,76 +1,341 @@
-# Abrir en un cliente que soporte archivos .http (por ejemplo REST Client de VS Code).
-# También se pueden copiar los métodos, URLs y cuerpos en Postman.
-# Iniciar la API antes. Ejecutar en orden, una sola vez desde un proceso nuevo.
+# Solicitudes de ejemplo de toda la API (Entregas 2 y 4).
+# Abrir con un cliente que soporte archivos .http (por ejemplo REST Client de VS Code), o copiar
+# los métodos, URLs y cuerpos en Postman.
+#
+# Iniciar la API antes (npm start en backend/). Arranca con los datos de demostración:
+# productos 1 a 10, clientes y pedidos RED-0001 a RED-0011.
+# Ejecutar en orden, empezando por los dos inicios de sesión: el resto usa sus tokens.
 @baseUrl = http://localhost:3000
+# Mañana, en la hora local: el retiro no puede ser en una fecha pasada ni a más de 30 días.
+@manana = {{$localDatetime "YYYY-MM-DD" 1 d}}
 
-### 1. Ver categorías (200)
-GET {{baseUrl}}/api/categorias
+### ───────────── Sesión (F-01) ─────────────
 
-### 2. Listado inicial vacío (200)
+### 1. Iniciar sesión como el dueño (200; guarda el token)
+# @name admin
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{ "email": "admin@redsuplementos.com", "contrasena": "RedAdmin2026" }
+
+@tokenAdmin = {{admin.response.body.data.token}}
+
+### 2. Iniciar sesión como cliente: Juan Pérez (200)
+# @name cliente
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{ "email": "cliente@example.com", "contrasena": "Cliente2026" }
+
+@tokenCliente = {{cliente.response.body.data.token}}
+
+### 3. Contraseña incorrecta (401, sin decir si el email existe)
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{ "email": "cliente@example.com", "contrasena": "otra-clave-1" }
+
+### 4. Crear una cuenta de cliente (201; abre la sesión)
+POST {{baseUrl}}/api/auth/registro
+Content-Type: application/json
+
+{
+    "nombre": "Lucía",
+    "apellido": "Sosa",
+    "email": "lucia@example.com",
+    "telefono": "1144556677",
+    "contrasena": "Entreno2026",
+    "confirmacion": "Entreno2026",
+    "esSocioGym": true
+}
+
+### 5. Email repetido (409, RN-07)
+POST {{baseUrl}}/api/auth/registro
+Content-Type: application/json
+
+{
+    "nombre": "Otra",
+    "apellido": "Persona",
+    "email": "CLIENTE@example.com",
+    "telefono": "1144556677",
+    "contrasena": "Entreno2026",
+    "confirmacion": "Entreno2026"
+}
+
+### 6. Contraseña sin números (400, V-03)
+POST {{baseUrl}}/api/auth/registro
+Content-Type: application/json
+
+{
+    "nombre": "Ana",
+    "apellido": "Ruiz",
+    "email": "ana@example.com",
+    "telefono": "1144556677",
+    "contrasena": "SoloLetras",
+    "confirmacion": "SoloLetras"
+}
+
+### 7. Quién soy (200)
+GET {{baseUrl}}/api/auth/sesion
+Authorization: Bearer {{tokenCliente}}
+
+### ───────────── Catálogo (F-02, F-03, RN-10) ─────────────
+
+### 8. Catálogo público, sin sesión (200)
 GET {{baseUrl}}/api/productos
 
-### 3. Crear producto (201; ID 1 en un proceso nuevo)
+### 9. Categorías (200)
+GET {{baseUrl}}/api/categorias
+
+### 10. Crear un producto sin sesión (401)
 POST {{baseUrl}}/api/productos
 Content-Type: application/json
 
+{ "nombre": "Barra", "idCategoria": 5, "precio": 2400, "stock": 10 }
+
+### 11. Crear un producto como cliente (403, RN-10)
+POST {{baseUrl}}/api/productos
+Authorization: Bearer {{tokenCliente}}
+Content-Type: application/json
+
+{ "nombre": "Barra", "idCategoria": 5, "precio": 2400, "stock": 10 }
+
+### 12. Crear un producto como dueño (201; el stock inicial queda como INGRESO)
+POST {{baseUrl}}/api/productos
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
 {
-    "nombre": "Creatina monohidrato 300 g",
-    "marca": "Star Nutrition",
+    "nombre": "Creatina Creapure 250 g",
+    "marca": "Gentech",
     "idCategoria": 2,
-    "descripcion": "Producto de demostración",
-    "precio": 25000.50,
-    "stock": 10,
-    "stockMinimo": 3,
+    "descripcion": "Producto de prueba",
+    "precio": 31500.50,
+    "stock": 6,
+    "stockMinimo": 2,
     "sabor": "Sin sabor",
     "imagen": ""
 }
 
-### 4. Obtener por ID (200)
-GET {{baseUrl}}/api/productos/1
-
-### 5. Rechazar duplicado (409)
-POST {{baseUrl}}/api/productos
-Content-Type: application/json
-
-{
-    "nombre": "Creatina monohidrato 300 g",
-    "marca": "Star Nutrition",
-    "idCategoria": 2,
-    "precio": 25000.50,
-    "stock": 10,
-    "sabor": "Sin sabor"
-}
-
-### 6. Modificar producto completo (200)
+### 13. Modificar sin enviar el stock: se conserva el actual (200)
 PUT {{baseUrl}}/api/productos/1
+Authorization: Bearer {{tokenAdmin}}
 Content-Type: application/json
 
 {
-    "nombre": "Creatina monohidrato 300 g",
-    "marca": "Star Nutrition",
-    "idCategoria": 2,
-    "descripcion": "Producto actualizado de demostración",
-    "precio": 27000,
-    "stock": 8,
-    "stockMinimo": 3,
-    "sabor": "Sin sabor",
-    "imagen": ""
+    "nombre": "True Made Whey Protein 930 g",
+    "marca": "ENA",
+    "idCategoria": 1,
+    "descripcion": "Proteína de suero de leche para la recuperación después de entrenar.",
+    "precio": 39900,
+    "stockMinimo": 4,
+    "sabor": "Chocolate",
+    "imagen": "/img/productos/ena-true-made-whey.webp"
 }
 
-### 7. Rechazar precio negativo (400)
+### 14. Precio negativo (400, V-05)
 POST {{baseUrl}}/api/productos
+Authorization: Bearer {{tokenAdmin}}
 Content-Type: application/json
 
 { "nombre": "Barra", "idCategoria": 5, "precio": -1, "stock": 10 }
 
-### 8. Rechazar ID inválido (400)
-GET {{baseUrl}}/api/productos/abc
+### ───────────── Stock (F-06) ─────────────
 
-### 9. Dar de baja (200; activo=false)
-DELETE {{baseUrl}}/api/productos/1
+### 15. Ingreso de mercadería (201)
+POST {{baseUrl}}/api/productos/2/movimientos
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
 
-### 10. Ya no está disponible (404)
-GET {{baseUrl}}/api/productos/1
+{ "tipo": "INGRESO", "cantidad": 12, "observacion": "Remito 0001-2345" }
 
-### 11. Listado vacío nuevamente (200)
-GET {{baseUrl}}/api/productos
+### 16. Ajuste sin motivo (400)
+POST {{baseUrl}}/api/productos/2/movimientos
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{ "tipo": "AJUSTE", "cantidad": -1 }
+
+### 17. Ajuste que dejaría el stock negativo (409)
+POST {{baseUrl}}/api/productos/4/movimientos
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{ "tipo": "AJUSTE", "cantidad": -1, "observacion": "Envase roto" }
+
+### 18. Historial de movimientos de un producto (200)
+GET {{baseUrl}}/api/productos/10/movimientos
+Authorization: Bearer {{tokenAdmin}}
+
+### ───────────── Carrito y pedido (F-04, RN-01, RN-03, RN-09, V-04, V-06, V-08) ─────────────
+
+### 19. Confirmar con el carrito vacío (400, V-08)
+POST {{baseUrl}}/api/pedidos
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{ "cliente": { "nombre": "Ana", "contacto": "@ana.prueba" }, "fechaRetiro": "{{manana}}", "horaRetiro": "18:00" }
+
+### 20. Agregar al carrito (201)
+POST {{baseUrl}}/api/carrito/items
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{ "idProducto": 3, "cantidad": 1 }
+
+### 21. Agregar más de lo que hay (409, RN-01)
+POST {{baseUrl}}/api/carrito/items
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{ "idProducto": 2, "cantidad": 500 }
+
+### 22. Cantidad no entera (400, V-04)
+POST {{baseUrl}}/api/carrito/items
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{ "idProducto": 10, "cantidad": 1.5 }
+
+### 23. Agregar otro producto y cambiar su cantidad (201 y 200)
+POST {{baseUrl}}/api/carrito/items
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{ "idProducto": 10, "cantidad": 1 }
+
+###
+PATCH {{baseUrl}}/api/carrito/items/10
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{ "cantidad": 3 }
+
+### 24. Ver el carrito con el descuento de la socia verificada (idCliente 3: Martina Gómez)
+GET {{baseUrl}}/api/carrito?idCliente=3
+Authorization: Bearer {{tokenAdmin}}
+
+### 25. Retiro en una fecha pasada (400, RN-03)
+POST {{baseUrl}}/api/pedidos
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{ "idCliente": 3, "fechaRetiro": "2020-01-01", "horaRetiro": "18:00" }
+
+### 26. Retiro fuera del horario del local (400, V-06)
+POST {{baseUrl}}/api/pedidos
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{ "idCliente": 3, "fechaRetiro": "{{manana}}", "horaRetiro": "23:00" }
+
+### 27. Confirmar el pedido (201; devuelve el pedido RED-0012, con el 10 % de socia, y las alertas de stock)
+POST {{baseUrl}}/api/pedidos
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{ "idCliente": 3, "fechaRetiro": "{{manana}}", "horaRetiro": "18:00" }
+
+### ───────────── Estados (F-05, RN-04, RN-05) ─────────────
+
+### 28. Marcar entregado sin haberlo marcado listo (409)
+PATCH {{baseUrl}}/api/pedidos/12/estado
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{ "estado": "ENTREGADO" }
+
+### 29. Marcar listo para retirar (200)
+PATCH {{baseUrl}}/api/pedidos/12/estado
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{ "estado": "LISTO_PARA_RETIRAR" }
+
+### 30. El cliente intenta marcar listo su pedido (403: desde su cuenta solo puede cancelar)
+PATCH {{baseUrl}}/api/pedidos/10/estado
+Authorization: Bearer {{tokenCliente}}
+Content-Type: application/json
+
+{ "estado": "LISTO_PARA_RETIRAR" }
+
+### 31. El cliente cancela su pedido pendiente (200; el stock vuelve, RN-04 y RN-05)
+PATCH {{baseUrl}}/api/pedidos/10/estado
+Authorization: Bearer {{tokenCliente}}
+Content-Type: application/json
+
+{ "estado": "CANCELADO" }
+
+### 32. El cliente pide un pedido de otra persona (404)
+GET {{baseUrl}}/api/pedidos/9
+Authorization: Bearer {{tokenCliente}}
+
+### 33. Cancelar sin motivo desde el panel (400)
+PATCH {{baseUrl}}/api/pedidos/11/estado
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{ "estado": "CANCELADO" }
+
+### 34. Cancelar con motivo (200)
+PATCH {{baseUrl}}/api/pedidos/11/estado
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{ "estado": "CANCELADO", "motivo": "Avisó por Instagram que no puede pasar" }
+
+### 35. Marcar entregado (200; la venta entra en los reportes)
+PATCH {{baseUrl}}/api/pedidos/12/estado
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{ "estado": "ENTREGADO" }
+
+### ───────────── Historial, clientes y reportes (F-07, F-08, RN-09) ─────────────
+
+### 36. Pedidos del cliente: solo los suyos (200)
+GET {{baseUrl}}/api/pedidos
+Authorization: Bearer {{tokenCliente}}
+
+### 37. Pedidos pendientes, vistos por el dueño (200)
+GET {{baseUrl}}/api/pedidos?estado=PENDIENTE
+Authorization: Bearer {{tokenAdmin}}
+
+### 38. Repetir un pedido anterior: carga sus productos en el carrito (200)
+POST {{baseUrl}}/api/pedidos/1/repetir
+Authorization: Bearer {{tokenAdmin}}
+
+### 39. Clientes y verificación de la membresía (200)
+GET {{baseUrl}}/api/clientes
+Authorization: Bearer {{tokenAdmin}}
+
+###
+PATCH {{baseUrl}}/api/clientes/4/membresia
+Authorization: Bearer {{tokenAdmin}}
+Content-Type: application/json
+
+{ "membresiaActiva": true }
+
+### 40. Reportes (200)
+GET {{baseUrl}}/api/reportes/ventas
+Authorization: Bearer {{tokenAdmin}}
+
+###
+GET {{baseUrl}}/api/reportes/mas-vendidos?desde=2026-11-01&hasta=2026-11-30&limite=5
+Authorization: Bearer {{tokenAdmin}}
+
+###
+GET {{baseUrl}}/api/reportes/cancelados
+Authorization: Bearer {{tokenAdmin}}
+
+###
+GET {{baseUrl}}/api/reportes/stock-critico
+Authorization: Bearer {{tokenAdmin}}
+
+### 41. Reportes como cliente (403, RN-10)
+GET {{baseUrl}}/api/reportes/ventas
+Authorization: Bearer {{tokenCliente}}
+
+### 42. Cerrar la sesión del cliente (200; el token deja de valer)
+POST {{baseUrl}}/api/auth/logout
+Authorization: Bearer {{tokenCliente}}

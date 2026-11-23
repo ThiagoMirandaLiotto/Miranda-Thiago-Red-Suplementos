@@ -1,0 +1,151 @@
+/* Mi cuenta: los pedidos a la izquierda sobre papel; los datos a la derecha. Sin líneas: tonos y aire. */
+.cuerpo {
+    display: grid;
+    gap: 48px;
+    padding: 24px var(--gutter) var(--section-gap);
+}
+
+.principal {
+    display: grid;
+    align-content: start;
+    gap: 48px;
+    min-width: 0;
+}
+
+.seccion {
+    display: grid;
+    gap: 16px;
+}
+
+.titulo {
+    font-size: var(--text-title);
+    font-weight: 800;
+}
+
+.pedido {
+    display: grid;
+    gap: 20px;
+    padding: clamp(20px, 3vw, 32px);
+    background: var(--color-paper);
+}
+
+.pedidoArriba {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px 16px;
+}
+
+.codigo {
+    font-family: var(--font-display);
+    font-size: var(--text-lead);
+    font-weight: 800;
+}
+
+.retiro {
+    font-size: var(--text-lead);
+    line-height: 1.35;
+}
+
+.nota {
+    font-size: var(--text-small);
+    color: var(--color-ink-muted);
+}
+
+.acciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 16px;
+}
+
+.vacio {
+    display: grid;
+    gap: 12px;
+    padding: clamp(20px, 3vw, 32px);
+    background: var(--color-paper);
+}
+
+.vacioTitulo {
+    font-family: var(--font-display);
+    font-size: var(--text-lead);
+    font-weight: 800;
+}
+
+.historial {
+    display: grid;
+    gap: 2px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.anterior {
+    display: grid;
+    gap: 8px;
+    padding: 20px;
+    background: var(--color-paper);
+}
+
+.anterior .codigo {
+    font-size: var(--text-body);
+}
+
+.resumen {
+    font-weight: 600;
+}
+
+.lateral {
+    display: grid;
+    align-content: start;
+    gap: 20px;
+}
+
+.lateral > :global(button) {
+    justify-self: start;
+}
+
+.membresia {
+    display: grid;
+    justify-items: start;
+    gap: 6px;
+}
+
+.perfil {
+    display: grid;
+    gap: 18px;
+    padding: clamp(20px, 3vw, 28px);
+    background: var(--color-paper);
+}
+
+.perfil :global(input) {
+    background: var(--color-ground);
+}
+
+.perfil > :global(button) {
+    justify-self: start;
+}
+
+.email {
+    display: grid;
+    gap: 2px;
+}
+
+.email span {
+    font-family: var(--font-display);
+    font-weight: 700;
+}
+
+.email strong {
+    font-weight: 400;
+    overflow-wrap: anywhere;
+}
+
+@media (min-width: 1024px) {
+    .cuerpo {
+        grid-template-columns: minmax(0, 1.6fr) minmax(300px, 1fr);
+        align-items: start;
+        gap: clamp(40px, 5vw, 80px);
+        padding-top: 40px;
+    }
+}

@@ -11,8 +11,21 @@ export const NEGOCIO = Object.freeze({
         texto: "Todos los días, de 7 a 22 h"
     }),
     zonaHoraria: "America/Argentina/Buenos_Aires",
-    descuentoSocios: 10
+    descuentoSocios: 10,
+    // Mismas reglas que valida la API (RN-03 y V-06): franjas de una hora y hasta 30 días de anticipación.
+    diasMaximosAnticipacion: 30
 });
+
+// Perfiles de la API (Análisis del Sistema, punto 4).
+export const ROL = Object.freeze({
+    CLIENTE: "CLIENTE",
+    ADMINISTRADOR: "ADMINISTRADOR"
+});
+
+// Pantalla de llegada después de ingresar, según el perfil.
+export function inicioSegunRol(rol) {
+    return rol === ROL.ADMINISTRADOR ? "/admin/pedidos" : "/mi-cuenta";
+}
 
 export const INSTAGRAM = Object.freeze({
     tienda: Object.freeze({ usuario: "redsuplementos_" }),

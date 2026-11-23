@@ -5,12 +5,21 @@ import Button from "../ui/Button.jsx";
 import InstagramIcon from "../ui/InstagramIcon.jsx";
 import TextoRoll from "../ui/TextoRoll.jsx";
 import { useBarraScroll } from "../../hooks/useBarraScroll.js";
-import { NAV_LINKS } from "../../utils/constants.js";
+import { useSesion } from "../../hooks/useSesion.js";
+import { NAV_LINKS, ROL } from "../../utils/constants.js";
 import { urlMensajeDirecto } from "../../utils/instagram.js";
 import styles from "./Navbar.module.css";
 
+// El último enlace depende de la sesión: Ingresar, Mi cuenta o el panel del local.
+function enlaceCuenta({ status, usuario }) {
+    if (status !== "autenticado") return { etiqueta: "Ingresar", destino: "/ingresar" };
+    if (usuario.rol === ROL.ADMINISTRADOR) return { etiqueta: "Panel", destino: "/admin" };
+    return { etiqueta: "Mi cuenta", destino: "/mi-cuenta" };
+}
+
 export default function Navbar() {
     const [abierto, setAbierto] = useState(false);
+    const sesion = useSesion();
     const { pathname } = useLocation();
     const menuId = useId();
     const barraRef = useRef(null);
@@ -36,6 +45,7 @@ export default function Navbar() {
     }, [abierto]);
 
     const cerrar = () => setAbierto(false);
+    const enlaces = [...NAV_LINKS, enlaceCuenta(sesion)];
 
     return (
         <header ref={barraRef} className={`${styles.barra} on-field`} data-fondo="solido">
@@ -56,7 +66,7 @@ export default function Navbar() {
                         {abierto ? "Cerrar" : "Menú"}
                     </button>
                     <ul id={menuId} className={styles.links} data-open={abierto}>
-                        {NAV_LINKS.map(({ etiqueta, destino }, indice) => (
+                        {enlaces.map(({ etiqueta, destino }, indice) => (
                             <li key={destino} style={{ "--i": indice }}>
                                 {destino.includes("#") ? (
                                     <Link to={destino} className={styles.link} onClick={cerrar}>

@@ -1,0 +1,27 @@
+.campo {
+    display: grid;
+    grid-template-columns: 24px minmax(0, 1fr);
+    align-items: start;
+    gap: 4px 12px;
+}
+
+/* Casilla nativa con el color de la tinta (accent-color en global.css) y área táctil amplia. */
+.casilla {
+    width: 24px;
+    height: 24px;
+    margin: 2px 0 0;
+    cursor: pointer;
+}
+
+.label {
+    min-height: 28px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.ayuda {
+    grid-column: 2;
+    font-size: var(--text-small);
+    color: var(--color-ink-muted);
+}

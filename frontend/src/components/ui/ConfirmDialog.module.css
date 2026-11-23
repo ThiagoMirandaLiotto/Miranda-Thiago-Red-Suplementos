@@ -77,6 +77,18 @@
     color: var(--color-danger);
 }
 
+/* Los campos van sobre el papel del diálogo con el fondo gris, como en los formularios. */
+.campos {
+    display: grid;
+    gap: 12px;
+}
+
+.campos :global(textarea),
+.campos :global(input),
+.campos :global(select) {
+    background: var(--color-ground);
+}
+
 .acciones {
     display: flex;
     flex-wrap: wrap;

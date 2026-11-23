@@ -1,6 +1,15 @@
 # RED SUPLEMENTOS — Entrega 2: Arquitectura MVC
 
-> Documentación original de la Entrega 2, que sigue siendo la referencia de la API. Las rutas son relativas a la raíz del repositorio. La Entrega 3 está descripta en el README de la raíz.
+> Documentación original de la Entrega 2, que se conserva como referencia del CRUD de productos. Las rutas son relativas a la raíz del repositorio.
+>
+> **Desde la Entrega 4 cambió:**
+>
+> - crear, modificar y dar de baja productos exige la sesión del administrador (RN-10);
+> - la API arranca con datos de demostración (`DATOS_DEMO=no` para empezar vacía);
+> - el stock se mueve con movimientos (ingresos, ajustes, ventas y devoluciones);
+> - en el `PUT` el campo `stock` es opcional.
+>
+> La API completa está en el README de la raíz.
 
 Backend de la tienda de suplementos deportivos RED SUPLEMENTOS, ubicada dentro de RED GYM. Implementa el CRUD de **Producto**, definido como CRUD principal en F-02 y en el Anexo A del análisis del sistema. Está organizado en las diez carpetas solicitadas y almacena los registros en arrays.
 

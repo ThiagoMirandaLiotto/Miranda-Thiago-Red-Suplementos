@@ -1,7 +1,7 @@
 {
     "name": "red-suplementos-backend",
     "version": "1.0.0",
-    "description": "Entrega 2: API MVC del cat\u00e1logo de RED SUPLEMENTOS",
+    "description": "API MVC de RED SUPLEMENTOS: catálogo, cuentas, carrito, pedidos, stock y reportes",
     "main": "src/server.js",
     "scripts": {
         "start": "node src/server.js",

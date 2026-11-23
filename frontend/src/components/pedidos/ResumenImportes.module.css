@@ -1,0 +1,40 @@
+.importes {
+    display: grid;
+    gap: 6px;
+    margin: 0;
+}
+
+.fila {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.fila dt {
+    color: var(--color-ink-muted);
+}
+
+.fila dd {
+    margin: 0;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.total {
+    margin-top: 6px;
+    padding-top: 10px;
+    border-top: 2px solid var(--color-ink);
+}
+
+.total dt {
+    font-family: var(--font-display);
+    font-weight: 800;
+    color: var(--color-ink);
+}
+
+.total dd {
+    font-family: var(--font-display);
+    font-size: var(--text-lead);
+    font-weight: 800;
+}

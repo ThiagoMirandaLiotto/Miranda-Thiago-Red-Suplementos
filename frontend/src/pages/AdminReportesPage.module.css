@@ -1,0 +1,242 @@
+.bajada {
+    max-width: 70ch;
+    color: var(--color-ink-muted);
+}
+
+/* Los filtros, en una fila arriba de todo lo que afectan. */
+.filtros {
+    display: grid;
+    gap: 16px;
+    padding: 16px;
+    background: var(--color-paper);
+}
+
+.rango {
+    display: grid;
+    gap: 16px;
+}
+
+.rango :global(input) {
+    background: var(--color-ground);
+}
+
+.grilla {
+    display: grid;
+    gap: 16px;
+    margin-top: 16px;
+}
+
+.seccion {
+    display: grid;
+    align-content: start;
+    gap: 14px;
+    min-width: 0;
+    padding: 24px;
+    background: var(--color-paper);
+}
+
+.subtitulo {
+    font-size: var(--text-body);
+    font-weight: 800;
+}
+
+.vacio,
+.nota {
+    font-size: var(--text-small);
+    color: var(--color-ink-muted);
+}
+
+.vacio {
+    font-size: var(--text-body);
+}
+
+/* min-width: 0 deja que la tabla se desplace dentro de su caja en lugar de ensanchar la página. */
+.atenuable {
+    min-width: 0;
+    transition: opacity var(--duration-fast) ease;
+}
+
+.atenuable[data-actualizando],
+.cifras[data-actualizando] {
+    opacity: 0.55;
+}
+
+/* Cifras: una franja partida en cuatro con separaciones de 2 px. */
+.cifras {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2px;
+    margin: 0;
+    transition: opacity var(--duration-fast) ease;
+}
+
+.cifra {
+    display: grid;
+    align-content: start;
+    gap: 4px;
+    padding: 18px 20px;
+    background: var(--color-paper);
+}
+
+.cifra dt {
+    font-size: var(--text-small);
+    font-weight: 600;
+    color: var(--color-ink-muted);
+}
+
+.cifra dd {
+    display: grid;
+    gap: 2px;
+    margin: 0;
+}
+
+/* Cifras sueltas grandes: dígitos proporcionales, no tabulares. */
+.valor {
+    font-family: var(--font-display);
+    font-size: var(--text-lead);
+    font-weight: 800;
+    line-height: 1.2;
+    overflow-wrap: anywhere;
+}
+
+.notaCifra {
+    font-size: var(--text-small);
+    color: var(--color-ink-muted);
+}
+
+.criticos {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.critico {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 6px 16px;
+    padding: 12px 0;
+}
+
+.critico + .critico {
+    border-top: 1px solid var(--color-sunk);
+}
+
+.nombre {
+    display: grid;
+    gap: 2px;
+    font-weight: 700;
+}
+
+.reponer {
+    display: inline-flex;
+    grid-column: 1 / -1;
+    align-items: center;
+    gap: 6px;
+    justify-self: start;
+    min-height: 44px;
+    font-family: var(--font-display);
+    font-size: var(--text-small);
+    font-weight: 700;
+}
+
+.desplazable {
+    overflow-x: auto;
+}
+
+.desplazable:focus-visible {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 4px;
+}
+
+.tabla {
+    width: 100%;
+    min-width: 480px;
+    border-collapse: collapse;
+}
+
+.tabla th,
+.tabla td {
+    padding: 10px 16px 10px 0;
+    text-align: left;
+    vertical-align: top;
+}
+
+.tabla thead th {
+    border-bottom: 2px solid var(--color-ink);
+    font-family: var(--font-display);
+    font-size: var(--text-small);
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.tabla tbody tr + tr {
+    border-top: 1px solid var(--color-sunk);
+}
+
+.tabla tbody th {
+    display: grid;
+    gap: 2px;
+    font-weight: 400;
+}
+
+.codigo {
+    font-family: var(--font-display);
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.motivo {
+    min-width: 14ch;
+    font-size: var(--text-small);
+}
+
+.tabla .numero {
+    padding-right: 0;
+    text-align: right;
+    white-space: nowrap;
+}
+
+.ocultable {
+    display: none;
+}
+
+@media (min-width: 720px) {
+    .rango {
+        grid-template-columns: repeat(2, minmax(0, 220px));
+    }
+
+    .ocultable {
+        display: table-cell;
+    }
+
+    .critico {
+        grid-template-columns: minmax(0, 1fr) auto auto;
+    }
+
+    .reponer {
+        grid-column: auto;
+    }
+}
+
+@media (min-width: 1024px) {
+    .grilla {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .ancho {
+        grid-column: 1 / -1;
+    }
+
+    .cifras {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .reponer:hover,
+    .codigo:hover {
+        text-decoration-thickness: 0.14em;
+    }
+}

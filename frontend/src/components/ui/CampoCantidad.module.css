@@ -1,0 +1,57 @@
+.campo {
+    display: inline-grid;
+    grid-template-columns: 44px 52px 44px;
+    height: 44px;
+    background: var(--color-sunk);
+}
+
+.boton {
+    display: grid;
+    place-items: center;
+    border: 0;
+    background: transparent;
+    transition: background-color var(--duration-fast) ease, transform var(--duration-press) var(--ease-out);
+}
+
+.boton:active:not(:disabled) {
+    transform: scale(0.94);
+}
+
+.boton:disabled {
+    color: var(--color-ink-disabled);
+    cursor: not-allowed;
+}
+
+.boton:focus-visible,
+.numero:focus-visible {
+    position: relative;
+    z-index: 1;
+    outline: 3px solid var(--color-focus);
+    outline-offset: 0;
+}
+
+.numero {
+    width: 100%;
+    min-width: 0;
+    border: 0;
+    background: var(--color-paper);
+    font-family: var(--font-display);
+    font-weight: 800;
+    text-align: center;
+}
+
+.numero:disabled {
+    color: var(--color-ink-muted);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .boton:hover:not(:disabled) {
+        background: var(--color-sunk-hover);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .boton:active:not(:disabled) {
+        transform: none;
+    }
+}

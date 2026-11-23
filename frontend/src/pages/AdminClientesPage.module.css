@@ -1,0 +1,76 @@
+.resumen {
+    color: var(--color-ink-muted);
+}
+
+.filtros {
+    max-width: 480px;
+    padding: 16px;
+    background: var(--color-paper);
+}
+
+.filtros :global(input) {
+    background: var(--color-ground);
+}
+
+.contenido {
+    margin-top: 16px;
+}
+
+.esqueleto {
+    display: grid;
+    gap: 2px;
+}
+
+.lista {
+    display: grid;
+    gap: 2px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.cliente {
+    display: grid;
+    align-items: center;
+    gap: 10px 24px;
+    padding: 16px;
+    background: var(--color-paper);
+}
+
+.datos {
+    display: grid;
+    gap: 2px;
+    min-width: 0;
+}
+
+.nombre {
+    font-weight: 700;
+}
+
+.secundario {
+    font-size: var(--text-small);
+    color: var(--color-ink-muted);
+    overflow-wrap: anywhere;
+}
+
+.accion :global(button) {
+    min-height: 44px;
+    padding: 0 14px;
+    font-size: var(--text-small);
+}
+
+@media (min-width: 860px) {
+    .cliente {
+        grid-template-columns: minmax(0, 1fr) 220px 200px;
+    }
+
+    .accion {
+        justify-self: end;
+    }
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .cliente:hover {
+        background: var(--color-paper-hover);
+    }
+}

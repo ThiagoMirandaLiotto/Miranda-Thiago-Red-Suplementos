@@ -1,0 +1,133 @@
+/* Ingresar y Crear cuenta: el formulario sobre papel y, al lado, una foto real del local cortada a 7°. */
+.cuerpo {
+    display: grid;
+    gap: 40px;
+    padding: 24px var(--gutter) var(--section-gap);
+}
+
+.panel {
+    display: grid;
+    align-content: start;
+    gap: 20px;
+    width: 100%;
+    max-width: 600px;
+    padding: clamp(20px, 3vw, 32px);
+    background: var(--color-paper);
+}
+
+.panel :global(input) {
+    background: var(--color-ground);
+}
+
+.dupla {
+    display: grid;
+    gap: 20px;
+}
+
+.error {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 12px 14px;
+    background: var(--color-danger-tint);
+    font-weight: 600;
+}
+
+.error svg {
+    flex: none;
+    margin-top: 3px;
+    color: var(--color-danger);
+}
+
+.alternativa {
+    text-align: center;
+}
+
+.alternativa a {
+    font-weight: 700;
+}
+
+.lado {
+    display: grid;
+    align-content: start;
+    gap: 28px;
+}
+
+.foto {
+    margin: 0;
+    clip-path: polygon(15.35% 0, 100% 0, 100% 100%, 0 100%);
+}
+
+.foto img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+}
+
+.razones {
+    display: grid;
+    gap: 18px;
+    max-width: 46ch;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.razones strong {
+    display: block;
+    font-family: var(--font-display);
+    font-size: var(--text-lead);
+    font-weight: 800;
+    line-height: 1.25;
+}
+
+/* Solo en desarrollo: las cuentas de demostración para probar sin escribirlas. */
+.demo {
+    padding: 14px 16px;
+    background: var(--color-ground);
+}
+
+.demo summary {
+    font-family: var(--font-display);
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.demo ul {
+    display: grid;
+    gap: 10px;
+    margin: 12px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.demo li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px 12px;
+    font-size: var(--text-small);
+}
+
+@media (min-width: 640px) {
+    .dupla {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (min-width: 960px) {
+    .cuerpo {
+        grid-template-columns: minmax(0, 600px) minmax(0, 1fr);
+        align-items: start;
+        gap: clamp(40px, 6vw, 96px);
+        padding-top: 40px;
+    }
+
+    /* La foto manda: ocupa la mayor parte de la columna y el texto la acompaña al pie. */
+    .lado {
+        grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+        align-items: end;
+    }
+}

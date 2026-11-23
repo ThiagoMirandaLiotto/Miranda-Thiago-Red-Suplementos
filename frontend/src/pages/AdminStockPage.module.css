@@ -1,0 +1,108 @@
+.resumen {
+    color: var(--color-ink-muted);
+}
+
+.resumen strong {
+    color: var(--color-ink);
+}
+
+.grilla {
+    display: grid;
+    gap: 16px;
+}
+
+.formulario,
+.historial {
+    display: grid;
+    align-content: start;
+    gap: 18px;
+    padding: 24px;
+    background: var(--color-paper);
+}
+
+.formulario :global(input) {
+    background: var(--color-ground);
+}
+
+.formulario > :global(button) {
+    justify-self: start;
+}
+
+.subtitulo {
+    font-size: var(--text-body);
+    font-weight: 800;
+}
+
+.esqueleto {
+    display: grid;
+    gap: 8px;
+}
+
+.vacio {
+    color: var(--color-ink-muted);
+}
+
+.lista {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* Cada movimiento: tipo y cantidad arriba, detalle y quién/cuándo abajo. */
+.movimiento {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 2px 16px;
+    padding: 12px 0;
+}
+
+.movimiento + .movimiento {
+    border-top: 1px solid var(--color-sunk);
+}
+
+.tipo {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-display);
+    font-weight: 700;
+}
+
+.tipo[data-sentido="entra"] svg {
+    color: var(--color-success);
+}
+
+.tipo[data-sentido="sale"] svg {
+    color: var(--color-ink-muted);
+}
+
+.cantidad {
+    font-family: var(--font-display);
+    font-weight: 800;
+    text-align: right;
+    white-space: nowrap;
+}
+
+.resultante {
+    font-weight: 600;
+    color: var(--color-ink-muted);
+}
+
+.detalle {
+    font-size: var(--text-small);
+    overflow-wrap: anywhere;
+}
+
+.meta {
+    font-size: var(--text-small);
+    color: var(--color-ink-muted);
+    text-align: right;
+}
+
+@media (min-width: 1024px) {
+    .grilla {
+        grid-template-columns: minmax(320px, 1fr) minmax(0, 1.6fr);
+        align-items: start;
+    }
+}

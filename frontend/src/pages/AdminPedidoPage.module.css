@@ -1,0 +1,88 @@
+.bajada {
+    color: var(--color-ink-muted);
+}
+
+.esqueleto {
+    display: grid;
+    gap: 16px;
+}
+
+.grilla {
+    display: grid;
+    gap: 16px;
+}
+
+.bloque {
+    display: grid;
+    align-content: start;
+    gap: 12px;
+    padding: 24px;
+    background: var(--color-paper);
+}
+
+.lateral {
+    display: grid;
+    align-content: start;
+    gap: 16px;
+}
+
+.subtitulo {
+    font-size: var(--text-body);
+    font-weight: 800;
+}
+
+.importes {
+    margin-top: 8px;
+}
+
+.destacado {
+    font-family: var(--font-display);
+    font-size: var(--text-lead);
+    font-weight: 800;
+    line-height: 1.25;
+}
+
+.nota {
+    font-size: var(--text-small);
+    color: var(--color-ink-muted);
+}
+
+.motivo {
+    padding: 12px 14px;
+    background: var(--color-danger-tint);
+    font-size: var(--text-small);
+}
+
+.contacto {
+    overflow-wrap: anywhere;
+}
+
+.enlace {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    min-height: 32px;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+}
+
+.acciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 12px;
+}
+
+@media (min-width: 1024px) {
+    .grilla {
+        grid-template-columns: minmax(0, 1.7fr) minmax(300px, 1fr);
+        align-items: start;
+    }
+
+    .lateral {
+        grid-row: span 2;
+    }
+
+    .historial {
+        grid-column: 1;
+    }
+}

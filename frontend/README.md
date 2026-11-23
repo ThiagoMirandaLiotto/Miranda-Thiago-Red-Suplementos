@@ -30,7 +30,9 @@ Son opcionales. Se definen en `.env.local` (ver `.env.example`).
 - **Estilo:** igual que el backend (4 espacios, comillas dobles, punto y coma, módulos ES).
 - **Nombres:** el dominio va en español, como en la API (`producto`, `getProductos`, `ProductoCard`). Las piezas genéricas de interfaz, en inglés (`Button`, `ConfirmDialog`).
 - **Estilos:** tokens y estilos generales en `src/styles/`; cada componente tiene su CSS Module al lado. Los colores, los tamaños de texto y las duraciones de la interfaz salen de los tokens. Las secuencias puntuales, como la entrada del hero, definen sus tiempos en su propio CSS.
-- **Datos:** los productos y las categorías llegan siempre de la API. Los datos del negocio (dirección, horario, cuentas de Instagram, navegación) están en un solo lugar: `src/utils/constants.js`.
+- **Datos:** productos, categorías, pedidos, clientes, stock y reportes llegan siempre de la API, a través de `src/services` (un archivo por recurso; `fetch` solo en `apiClient.js`). Los importes, descuentos y totales los calcula la API. Los datos fijos del negocio (dirección, horario, cuentas de Instagram, navegación) están en un solo lugar: `src/utils/constants.js`.
+- **Sesión:** `src/context/SesionProvider.jsx` guarda quién ingresó y `apiClient.js` envía el token en cada petición. Las pantallas privadas se envuelven en `RutaProtegida` con el perfil que piden.
+- **Cargas:** `src/hooks/useRecurso.js` resuelve los tres estados de una carga (cargando, listo, error) y «Reintentar» para las pantallas nuevas.
 
 ## Movimiento
 

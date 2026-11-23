@@ -1,0 +1,89 @@
+.grupo {
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+.leyenda {
+    float: left;
+    width: 100%;
+    margin-bottom: 6px;
+    padding: 0;
+    font-family: var(--font-display);
+    font-weight: 700;
+}
+
+/* En pantallas angostas la fila se desplaza de costado en lugar de partirse.
+   "clear" la ubica debajo de la leyenda flotante, que si no queda encima y se lleva los clics. */
+.opciones {
+    clear: both;
+    display: flex;
+    gap: 2px;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.opciones::-webkit-scrollbar {
+    display: none;
+}
+
+.ancho .opciones {
+    display: grid;
+    grid-auto-columns: minmax(0, 1fr);
+    grid-auto-flow: column;
+}
+
+.opcion {
+    position: relative;
+    display: flex;
+    flex: none;
+}
+
+/* Se usa varias veces por día: sin desplazamientos, solo el cambio de tono. */
+.etiqueta {
+    display: inline-flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 0 16px;
+    background: var(--color-sunk);
+    font-family: var(--font-display);
+    font-size: var(--text-small);
+    font-weight: 700;
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color var(--duration-fast) ease, color var(--duration-fast) ease;
+}
+
+.detalle {
+    min-width: 1.6em;
+    padding: 0 6px;
+    background: var(--color-paper);
+    font-weight: 800;
+    text-align: center;
+}
+
+.opcion input:checked + .etiqueta {
+    background: var(--color-ink);
+    color: var(--color-ground);
+}
+
+.opcion input:checked + .etiqueta .detalle {
+    background: var(--color-field-hover);
+    color: var(--color-ground);
+}
+
+.opcion input:focus-visible + .etiqueta {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 2px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .opcion input:not(:checked) + .etiqueta:hover {
+        background: var(--color-sunk-hover);
+    }
+}

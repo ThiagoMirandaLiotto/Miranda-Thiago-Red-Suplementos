@@ -8,14 +8,18 @@ web
 
 ## Users
 
-- **Visitantes y clientes:** jóvenes y adultos que entrenan (musculación, fitness, deportes). Muchos son socios de RED GYM y ven el sitio desde el celular, antes o después de entrenar.
-- **Administrador:** el dueño del local. Carga, edita y da de baja productos desde el panel, varias veces por semana, en desktop o celular.
+- **Visitantes y clientes:** jóvenes y adultos que entrenan (musculación, fitness, deportes). Muchos son socios de RED GYM y ven el sitio desde el celular, antes o después de entrenar. Con cuenta, siguen sus pedidos en «Mi cuenta».
+- **Administrador:** el dueño del local. Todos los días carga en el panel los pedidos que le llegan por Instagram y los marca listos y entregados. También mantiene el catálogo y el stock, verifica membresías y mira los reportes, en desktop o celular.
 
 ## Product Purpose
 
-Mostrar el catálogo de RED Suplementos de forma clara, para comparar y consultar antes de comprar, y agilizar los pedidos. Las consultas y los pedidos se hacen por mensaje directo de Instagram a @redsuplementos_, y los productos se retiran en el local.
+Mostrar el catálogo de RED Suplementos de forma clara, para comparar y consultar antes de comprar, y llevar los pedidos sin errores. Las consultas y los pedidos se hacen por mensaje directo de Instagram a @redsuplementos_ (así lo quiere el dueño). El dueño registra cada pedido en el panel: el sistema reserva el stock, sigue sus estados y alimenta el historial del cliente y los reportes. Los productos se retiran en el local.
 
-El éxito se mide en dos cosas: que el visitante encuentre el producto y le escriba a la tienda en pocos pasos, y que el dueño mantenga el catálogo al día sin errores.
+El éxito se mide en tres cosas:
+
+- que el visitante encuentre el producto y le escriba a la tienda en pocos pasos;
+- que no se venda nada sin stock;
+- que cada venta quede registrada.
 
 ## Positioning
 
@@ -25,15 +29,17 @@ La tienda está **adentro de RED GYM** (Rogelio Yrurtia 6028, Saavedra, CABA): c
 
 - Instagram es el canal real del negocio: @redsuplementos_ (tienda) y @redgym_ba (gimnasio). **No se usa WhatsApp.**
 - Los links de mensaje directo (`ig.me/m/…`) no permiten dejar el texto escrito. Por eso la consulta se copia al portapapeles antes de abrir el chat.
-- Entrega académica (Entrega 3, Frontend). El backend es la API de la Entrega 2 (Express): CRUD de productos con baja lógica y categorías de solo lectura.
+- Entrega académica (Entrega 4, sistema completo). El backend es una API en Express (MVC) con cuentas, carrito, pedidos, stock, clientes y reportes.
 
 ## Capabilities and Constraints
 
 - **Categorías fijas, que vienen de la API:** Proteínas, Creatina, Pre-entreno, Aminoácidos y Barras proteicas.
-- **Lo que la API no tiene:** carrito, pedidos, usuarios, autenticación (RN-10 pendiente: el panel queda abierto), filtros del lado del servidor, PATCH y subida de imágenes. El campo `imagen` es una URL o una ruta de texto.
-- **Persistencia en memoria:** al reiniciar el backend se pierden los productos. Un catálogo vacío es un estado normal.
-- **La API exige:** solo los 9 campos editables; números como `number`; precio > 0 con 2 decimales como máximo; stock entero ≥ 0. Un duplicado (mismo nombre, marca, sabor y categoría) devuelve 409.
-- **Sin descuentos calculados:** la API no aplica la promo; los precios se muestran tal cual.
+- **Cuentas:** clientes que se registran desde la página y una sola cuenta de administrador, creada al iniciar la API. El panel y sus endpoints exigen la sesión del administrador (RN-10).
+- **Pedidos:** los arma el administrador con un carrito. El pedido es de un cliente con cuenta o de alguien sin cuenta (nombre e Instagram o teléfono), con día y franja de retiro de 7 a 22 h. Sus estados son pendiente, listo para retirar y entregado, más cancelado y vencido (a las 48 h).
+- **Stock:** se reserva al confirmar y vuelve al cancelar o vencer. Cada cambio queda como movimiento. El formulario de edición ya no lo modifica.
+- **Importes:** precios, subtotales, el 10 % de socio (solo con la membresía verificada por el local) y los totales los calcula la API.
+- **Persistencia en memoria:** al reiniciar la API vuelven los datos de demostración. Con `DATOS_DEMO=no` arranca vacía, y un catálogo vacío es un estado normal.
+- **Sin:** subida de imágenes (el campo `imagen` es una URL o una ruta de texto), pagos online ni notificaciones.
 
 ## Brand Commitments
 
@@ -58,7 +64,7 @@ La tienda está **adentro de RED GYM** (Rogelio Yrurtia 6028, Saavedra, CABA): c
   - La fachada del local con el cartel «RED GYM».
   - Una foto de los suplementos reales sobre discos de pesas (`redgym_2022-06-30_Cfbr7jyrFcn.jpg`).
   - Muchas son piezas gráficas con texto encima.
-- Los productos de la demo (`../docs/cargar-demo.mjs`) tienen precios ficticios.
+- Los datos de demostración (`../backend/src/data/datosDemo.js`) son ficticios: productos, precios, stock, clientes y pedidos.
 - **No existen** testimonios, reseñas, cifras de clientes, premios ni prensa: no se inventan.
 
 ## Product Principles

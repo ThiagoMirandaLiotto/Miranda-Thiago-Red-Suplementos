@@ -1,5 +1,6 @@
 import { useSearchParams } from "react-router";
 import { PackageOpen, SearchX } from "lucide-react";
+import EncabezadoPublico from "../components/layout/EncabezadoPublico.jsx";
 import ProductoFiltros from "../components/productos/ProductoFiltros.jsx";
 import ProductoCard from "../components/productos/ProductoCard.jsx";
 import Button from "../components/ui/Button.jsx";
@@ -96,12 +97,7 @@ export default function CatalogoPage() {
     return (
         <>
             <title>Catálogo · RED Suplementos</title>
-            <header className={`${styles.encabezado} on-field`}>
-                <h1 className="display linea-carga">
-                    <span className="linea"><span>Catálogo</span></span>
-                </h1>
-                <p className={styles.lead}>Todos los productos de la tienda, con precio y disponibilidad al día.</p>
-            </header>
+            <EncabezadoPublico lineas={["Catálogo"]} bajada="Todos los productos de la tienda, con precio y disponibilidad al día." />
 
             <div ref={ref} className={styles.cuerpo}>
                 <div className="reveal">
